@@ -1,7 +1,7 @@
 {
-  "name": "weather-application",
+  "name": "battleship",
   "version": "1.0.0",
-  "description": "Search city and display its current weather",
+  "description": "The classic game of battleship",
   "private": true,
   "scripts": {
     "test": "jest",
@@ -44,10 +44,10 @@
   "main": "webpack.config.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Stalloyde/webpack-template.git"
+    "url": "git+https://github.com/Stalloyde/battleship.git"
   },
   "bugs": {
-    "url": "https://github.com/Stalloyde/webpack-template/issues"
+    "url": "https://github.com/Stalloyde/battleship/issues"
   },
-  "homepage": "https://github.com/Stalloyde/webpack-template#readme"
+  "homepage": "https://github.com/Stalloyde/battleship#readme"
 }
