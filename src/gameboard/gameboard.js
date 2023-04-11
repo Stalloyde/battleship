@@ -1,11 +1,30 @@
 import shipsFactory from '../ships/ship';
 
 function gameboardFactory() {
+  const carrier = shipsFactory(5);
+  const battleship = shipsFactory(4);
+  const destroyer = shipsFactory(3);
+  const submarine = shipsFactory(3);
+  const patrolBoat = shipsFactory(2);
+
+  const missedShots = [];
+  const hitShots = [];
+
   function placeShip(ship, length, alignment, startCoordinate) {
+    if (
+      startCoordinate[0] > 7 ||
+      startCoordinate[1] > 7 ||
+      startCoordinate[0] < 1 ||
+      startCoordinate[1] < 1
+    ) {
+      return 'Error. Ship placement exceeds board size';
+    }
+
     ship.position = [];
     if (alignment === 'vertical') {
       const numberOfLoops = startCoordinate[1] + length;
       for (let y = startCoordinate[1]; y < numberOfLoops; y++) {
+        if (y > 7 || y < 1) return 'Error. Ship placement exceeds board size';
         ship.position.push([startCoordinate[0], y]);
       }
     }
@@ -13,6 +32,7 @@ function gameboardFactory() {
     if (alignment === 'horizontal') {
       const numberOfLoops = startCoordinate[0] + length;
       for (let x = startCoordinate[0]; x < numberOfLoops; x++) {
+        if (x > 7 || x < 1) return 'Error. Ship placement exceeds board size';
         ship.position.push([x, startCoordinate[1]]);
       }
     }
@@ -74,7 +94,17 @@ function gameboardFactory() {
     return grid;
   }
 
-  return { createGrid, placeShip };
-}
+  function receiveAttack(ship, coordinate) {
+    for (let i = 0; i < ship.position.length; i++) {
+      if (ship.position[i].join() === coordinate.join()) {
+        hitShots.push(coordinate);
+        return ship.hit();
+      }
+    }
+    missedShots.push(coordinate);
+    return 'Missed!';
+  }
 
+  return { createGrid, placeShip, receiveAttack };
+}
 export default gameboardFactory;
