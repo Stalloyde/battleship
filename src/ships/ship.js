@@ -1,4 +1,4 @@
-function shipsFactory(length) {
+function shipsFactory(length, xAxis, yAxis) {
   let health = length;
 
   function hit() {
