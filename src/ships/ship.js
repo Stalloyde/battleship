@@ -1,5 +1,9 @@
-function shipsFactory(length, xAxis, yAxis) {
+function shipsFactory(length) {
   let health = length;
+
+  function sunk() {
+    return 'Your ship has been sunk!';
+  }
 
   function hit() {
     health -= 1;
@@ -9,9 +13,6 @@ function shipsFactory(length, xAxis, yAxis) {
     return health;
   }
 
-  function sunk() {
-    return 'Your ship has been sunk!';
-  }
   return { length, hit, sunk };
 }
 
