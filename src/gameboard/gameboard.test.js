@@ -62,11 +62,20 @@ test('place ship', () => {
   );
 });
 
-test('receive attack', () => {
+test('receive attack hit', () => {
   expect(gameboard.receiveAttack([2, 1])).toBe(3);
   expect(gameboard.receiveAttack([2, 2])).toBe(2);
   expect(gameboard.receiveAttack([2, 3])).toBe(1);
   expect(gameboard.receiveAttack([2, 4])).toBe('Your ship has been sunk!');
   expect(gameboard.receiveAttack([5, 1])).toBe(1);
   expect(gameboard.receiveAttack([5, 2])).toBe('Your ship has been sunk!');
+});
+
+test('receive attack miss', () => {
+  expect(gameboard.receiveAttack([7, 1])).toBe('Missed!');
+  expect(gameboard.receiveAttack([7, 2])).toBe('Missed!');
+  expect(gameboard.receiveAttack([7, 3])).toBe('Missed!');
+  expect(gameboard.receiveAttack([7, 4])).toBe('Missed!');
+  expect(gameboard.receiveAttack([9, 1])).toBe('Missed!');
+  expect(gameboard.receiveAttack([9, 2])).toBe('Missed!');
 });
