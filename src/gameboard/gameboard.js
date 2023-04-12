@@ -107,16 +107,10 @@ function gameboardFactory() {
     return grid;
   }
 
-  const carrier = shipsFactory(5);
-  const battleship = shipsFactory(4);
-  const destroyer = shipsFactory(3);
-  const submarine = shipsFactory(3);
-  const patrolBoat = shipsFactory(2);
-
   const missedShots = [];
   const hitShots = [];
 
-  function placeShip(ship, length, alignment, startCoordinate) {
+  function placeShip(ship, alignment, startCoordinate, length = ship.length) {
     if (
       startCoordinate[0] > 7 ||
       startCoordinate[1] > 7 ||
@@ -155,6 +149,26 @@ function gameboardFactory() {
     missedShots.push(coordinate);
     return 'Missed!';
   }
+
+  const carrier = shipsFactory(5);
+  const battleship = shipsFactory(4);
+  const destroyer = shipsFactory(3);
+  const submarine = shipsFactory(3);
+  const patrolBoat = shipsFactory(2);
+
+  placeShip(carrier, 'vertical', [1, 1]);
+  placeShip(battleship, 'vertical', [2, 1]);
+  placeShip(destroyer, 'vertical', [3, 1]);
+  placeShip(submarine, 'vertical', [4, 1]);
+  placeShip(patrolBoat, 'vertical', [5, 1]);
+
+  const allShips = {
+    carrier,
+    battleship,
+    destroyer,
+    submarine,
+    patrolBoat,
+  };
 
   return { createGrid, placeShip, receiveAttack };
 }
