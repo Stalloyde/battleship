@@ -1,3 +1,6 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
 import shipsFactory from '../ships/ship';
 
 function gameboardFactory() {
@@ -139,17 +142,6 @@ function gameboardFactory() {
     return ship.position;
   }
 
-  function receiveAttack(ship, coordinate) {
-    for (let i = 0; i < ship.position.length; i++) {
-      if (ship.position[i].join() === coordinate.join()) {
-        hitShots.push(coordinate);
-        return ship.hit();
-      }
-    }
-    missedShots.push(coordinate);
-    return 'Missed!';
-  }
-
   const carrier = shipsFactory(5);
   const battleship = shipsFactory(4);
   const destroyer = shipsFactory(3);
@@ -170,6 +162,21 @@ function gameboardFactory() {
     patrolBoat,
   };
 
+  function receiveAttack(coordinate) {
+    for (const ship in allShips) {
+      const currentShip = allShips[ship];
+      const currentShipPosition = allShips[ship].position;
+
+      for (let x = 0; x <= currentShipPosition.length - 1; x++) {
+        if (currentShipPosition[x].join() === coordinate.join()) {
+          hitShots.push(coordinate);
+          return currentShip.hit();
+        }
+      }
+    }
+    missedShots.push(coordinate);
+    return 'Missed!';
+  }
   return { createGrid, placeShip, receiveAttack };
 }
 export default gameboardFactory;
