@@ -3,7 +3,7 @@
 /* eslint-disable no-restricted-syntax */
 import shipsFactory from '../ships/ship';
 
-function gameboardFactory() {
+function gameboardFactory(name = 'Computer') {
   function createGrid() {
     const grid = [
       '1,1',
@@ -122,7 +122,6 @@ function gameboardFactory() {
     ) {
       return 'Error. Ship placement exceeds board size';
     }
-
     ship.position = [];
     if (alignment === 'vertical') {
       const numberOfLoops = startCoordinate[1] + length;
@@ -177,6 +176,6 @@ function gameboardFactory() {
     missedShots.push(coordinate);
     return 'Missed!';
   }
-  return { createGrid, placeShip, receiveAttack };
+  return { createGrid, placeShip, receiveAttack, hitShots, missedShots };
 }
 export default gameboardFactory;
