@@ -8,7 +8,7 @@ function gameboardFactory(name = 'Computer') {
     const gridsArray = [];
     for (let y = 1; y < 11; y++) {
       for (let x = 1; x < 11; x++) {
-        gridsArray.push([`x:${x},y:${y}`]);
+        gridsArray.push([`x:${String.fromCharCode(x + 64)},y:${y}`]);
       }
     }
     return gridsArray;
