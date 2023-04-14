@@ -28,9 +28,17 @@ body {
 }
 
 .game-container > div {
-  border: 1px solid black;
   margin: auto auto;
   padding: 1em;
-  height: min(500px);
-  width: min(500px);
+}
+
+.player-grid,
+.computer-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 50px);
+  grid-template-rows: repeat(10, 50px);
+}
+
+.grid {
+  border: 1px solid black;
 }
