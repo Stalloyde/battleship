@@ -1,3 +1,36 @@
-.test {
-  color: rgb(173, 173, 173);
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr 15fr 1fr;
+  padding: 3em;
+  text-align: center;
+}
+
+.header,
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 1em;
+  text-align: center;
+  align-items: center;
+}
+
+.game-container > div {
+  border: 1px solid black;
+  margin: auto auto;
+  padding: 1em;
+  height: min(500px);
+  width: min(500px);
 }
