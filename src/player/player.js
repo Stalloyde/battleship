@@ -1,8 +1,6 @@
+import { random } from 'lodash';
 import gameboardFactory from '../gameboard/gameboard';
 import shipsFactory from '../ships/ship';
-
-const playerGameboard = gameboardFactory('Stalloyde');
-const computerGameboard = gameboardFactory();
 
 function playerFactory(name = 'Computer') {
   function attackActionOnOpponentGameBoard(coordinate, opponentGameboard) {
@@ -18,11 +16,19 @@ function playerFactory(name = 'Computer') {
     return opponentGameboard.receiveAttack(coordinate);
   }
 
+  function randomCoordinate() {
+    const randomArray = [
+      Math.floor(Math.random() * (10 - 1) + 1),
+      Math.floor(Math.random() * (10 - 1) + 1),
+    ];
+    return randomArray;
+  }
+
   function attack(coordinate) {
     if (name !== 'Computer') {
       return attackActionOnOpponentGameBoard(coordinate, computerGameboard);
     }
-    return attackActionOnOpponentGameBoard(coordinate, playerGameboard);
+    return attackActionOnOpponentGameBoard(randomCoordinate(), playerGameboard);
   }
 
   return { name, attack };
