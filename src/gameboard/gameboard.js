@@ -3,12 +3,14 @@
 /* eslint-disable no-restricted-syntax */
 import shipsFactory from '../ships/ship';
 
-function gameboardFactory(name = 'Computer') {
+function gameboardFactory(name) {
+  const gameboardOwner = name.name;
+
   function createGrid() {
     const gridsArray = [];
     for (let y = 1; y < 11; y++) {
       for (let x = 1; x < 11; x++) {
-        gridsArray.push([`x:${String.fromCharCode(x + 64)},y:${y}`]);
+        gridsArray.push([`X:${String.fromCharCode(x + 64)},Y:${y}`]);
       }
     }
     return gridsArray;
@@ -51,12 +53,6 @@ function gameboardFactory(name = 'Computer') {
   const submarine = shipsFactory(3);
   const patrolBoat = shipsFactory(2);
 
-  placeShip(carrier, 'vertical', [1, 1]); //1,1...1,2...1,3...1,4...1,5
-  placeShip(battleship, 'vertical', [2, 1]); //2,1...2,2...2,3...2,4...2,5
-  placeShip(destroyer, 'vertical', [3, 1]); //3,1...3,2...3,3
-  placeShip(submarine, 'vertical', [4, 1]); //4,1...4,2...4,3
-  placeShip(patrolBoat, 'vertical', [5, 1]); //5,1...5,2
-
   const allShips = {
     carrier,
     battleship,
@@ -80,7 +76,15 @@ function gameboardFactory(name = 'Computer') {
     missedShots.push(coordinate);
     return 'Missed!';
   }
-  return { createGrid, placeShip, receiveAttack, hitShots, missedShots };
+  return {
+    gameboardOwner,
+    createGrid,
+    placeShip,
+    receiveAttack,
+    allShips,
+    hitShots,
+    missedShots,
+  };
 }
 
 export default gameboardFactory;
