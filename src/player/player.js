@@ -2,6 +2,9 @@ import { random } from 'lodash';
 import gameboardFactory from '../gameboard/gameboard';
 import shipsFactory from '../ships/ship';
 
+const playerGameboard = gameboardFactory('Stalloyde');
+const computerGameboard = gameboardFactory('Computer');
+
 function playerFactory(name = 'Computer') {
   function attackActionOnOpponentGameBoard(coordinate, opponentGameboard) {
     const shotAttempts = opponentGameboard.hitShots.concat(
