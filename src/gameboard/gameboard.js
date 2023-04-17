@@ -20,14 +20,28 @@ function gameboardFactory(name) {
   const hitShots = [];
 
   function placeShip(ship, alignment, startCoordinate, length = ship.length) {
+    const alphabets = [
+      'NULL',
+      'A',
+      'B',
+      'C',
+      'D',
+      'E',
+      'F',
+      'G',
+      'H',
+      'I',
+      'J',
+    ];
     if (
-      startCoordinate[0] > 7 ||
+      alphabets.indexOf(startCoordinate[0]) > 7 ||
       startCoordinate[1] > 7 ||
-      startCoordinate[0] < 1 ||
+      alphabets.indexOf(startCoordinate[0]) < 0 ||
       startCoordinate[1] < 1
     ) {
       return 'Error. Ship placement exceeds board size';
     }
+
     ship.position = [];
     if (alignment === 'vertical') {
       const numberOfLoops = startCoordinate[1] + length;
@@ -38,10 +52,14 @@ function gameboardFactory(name) {
     }
 
     if (alignment === 'horizontal') {
-      const numberOfLoops = startCoordinate[0] + length;
-      for (let x = startCoordinate[0]; x < numberOfLoops; x++) {
-        if (x > 10 || x < 1) return 'Error. Ship placement exceeds board size';
-        ship.position.push([x, startCoordinate[1]]);
+      const numberOfLoops = alphabets.indexOf(startCoordinate[0]) + length;
+      for (
+        let x = alphabets.indexOf(startCoordinate[0]);
+        x < numberOfLoops;
+        x++
+      ) {
+        if (x > 7 || x < 1) return 'Error. Ship placement exceeds board size';
+        ship.position.push([alphabets[x], startCoordinate[1]]);
       }
     }
     return ship.position;
@@ -60,6 +78,13 @@ function gameboardFactory(name) {
     submarine,
     patrolBoat,
   };
+
+  //for testing purposes only
+  placeShip(allShips.carrier, 'vertical', ['A', 1]); //1,1...1,2...1,3...1,4...1,5
+  placeShip(allShips.battleship, 'vertical', ['B', 1]); //2,1...2,2...2,3...2,4...2,5
+  placeShip(allShips.destroyer, 'vertical', ['C', 1]); //3,1...3,2...3,3
+  placeShip(allShips.submarine, 'vertical', ['D', 1]); //4,1...4,2...4,3
+  placeShip(allShips.patrolBoat, 'vertical', ['E', 1]); //5,1...5,2
 
   function receiveAttack(coordinate) {
     for (const ship in allShips) {
