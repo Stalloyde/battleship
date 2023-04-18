@@ -39,6 +39,22 @@ test('place ship', () => {
     ['F', 1],
   ]);
 
+  expect(gameboard.placeShip(shipA, 'horizontal', ['C', 10])).toEqual([
+    ['C', 10],
+    ['D', 10],
+    ['E', 10],
+    ['F', 10],
+    ['G', 10],
+  ]);
+
+  expect(gameboard.placeShip(shipA, 'horizontal', ['F', 6])).toEqual([
+    ['F', 6],
+    ['G', 6],
+    ['H', 6],
+    ['I', 6],
+    ['J', 6],
+  ]);
+
   expect(gameboard.placeShip(shipA, 'horizontal', ['G', 0])).toBe(
     'Error. Ship placement exceeds board size'
   );
@@ -47,7 +63,7 @@ test('place ship', () => {
     'Error. Ship placement exceeds board size'
   );
 
-  expect(gameboard.placeShip(shipA, 'horizontal', ['A', 8])).toBe(
+  expect(gameboard.placeShip(shipA, 'horizontal', ['H', 8])).toBe(
     'Error. Ship placement exceeds board size'
   );
 

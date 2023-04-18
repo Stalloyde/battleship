@@ -10,7 +10,7 @@ function gameboardFactory(name) {
     const gridsArray = [];
     for (let y = 1; y < 11; y++) {
       for (let x = 1; x < 11; x++) {
-        gridsArray.push([`X:${String.fromCharCode(x + 64)},Y:${y}`]);
+        gridsArray.push([`${String.fromCharCode(x + 64)},${y}`]);
       }
     }
     return gridsArray;
@@ -33,20 +33,18 @@ function gameboardFactory(name) {
       'I',
       'J',
     ];
-    if (
-      alphabets.indexOf(startCoordinate[0]) > 7 ||
-      startCoordinate[1] > 7 ||
-      alphabets.indexOf(startCoordinate[0]) < 0 ||
-      startCoordinate[1] < 1
-    ) {
-      return 'Error. Ship placement exceeds board size';
-    }
 
     ship.position = [];
     if (alignment === 'vertical') {
       const numberOfLoops = startCoordinate[1] + length;
       for (let y = startCoordinate[1]; y < numberOfLoops; y++) {
-        if (y > 10 || y < 1) return 'Error. Ship placement exceeds board size';
+        if (
+          y > 10 ||
+          y < 1 ||
+          alphabets.indexOf(startCoordinate[0]) > 10 ||
+          alphabets.indexOf(startCoordinate[0]) < 1
+        )
+          return 'Error. Ship placement exceeds board size';
         ship.position.push([startCoordinate[0], y]);
       }
     }
@@ -58,7 +56,14 @@ function gameboardFactory(name) {
         x < numberOfLoops;
         x++
       ) {
-        if (x > 7 || x < 1) return 'Error. Ship placement exceeds board size';
+        if (
+          x > 10 ||
+          x < 1 ||
+          startCoordinate[1] > 10 ||
+          startCoordinate[1] < 1
+        ) {
+          return 'Error. Ship placement exceeds board size';
+        }
         ship.position.push([alphabets[x], startCoordinate[1]]);
       }
     }
@@ -79,7 +84,7 @@ function gameboardFactory(name) {
     patrolBoat,
   };
 
-  //for testing purposes only
+  // for testing purposes only.. uncomment to pass tests
   placeShip(allShips.carrier, 'vertical', ['A', 1]); //1,1...1,2...1,3...1,4...1,5
   placeShip(allShips.battleship, 'vertical', ['B', 1]); //2,1...2,2...2,3...2,4...2,5
   placeShip(allShips.destroyer, 'vertical', ['C', 1]); //3,1...3,2...3,3
