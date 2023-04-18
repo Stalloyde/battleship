@@ -5,6 +5,9 @@ import shipsFactory from '../ships/ship';
 
 function gameboardFactory(name) {
   const gameboardOwner = name.name;
+  const missedShots = [];
+  const hitShots = [];
+  const occupiedCoordinates = [];
 
   function createGrid() {
     const gridsArray = [];
@@ -15,9 +18,6 @@ function gameboardFactory(name) {
     }
     return gridsArray;
   }
-
-  const missedShots = [];
-  const hitShots = [];
 
   function placeShip(ship, alignment, startCoordinate, length = ship.length) {
     const alphabets = [
@@ -35,6 +35,7 @@ function gameboardFactory(name) {
     ];
 
     ship.position = [];
+
     if (alignment === 'vertical') {
       const numberOfLoops = startCoordinate[1] + length;
       for (let y = startCoordinate[1]; y < numberOfLoops; y++) {
@@ -67,6 +68,8 @@ function gameboardFactory(name) {
         ship.position.push([alphabets[x], startCoordinate[1]]);
       }
     }
+
+    occupiedCoordinates.push(ship.position);
     return ship.position;
   }
 
