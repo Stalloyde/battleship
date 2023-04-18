@@ -83,3 +83,7 @@ body {
   cursor: crosshair;
   opacity: 0.6;
 }
+
+.position-placed {
+  background-color: gray;
+}
