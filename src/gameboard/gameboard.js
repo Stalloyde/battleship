@@ -7,7 +7,6 @@ function gameboardFactory(name) {
   const gameboardOwner = name.name;
   const missedShots = [];
   const hitShots = [];
-  const occupiedCoordinates = [];
 
   function createGrid() {
     const gridsArray = [];
@@ -33,9 +32,7 @@ function gameboardFactory(name) {
       'I',
       'J',
     ];
-
     ship.position = [];
-
     function placeVertical() {
       const numberOfLoops = startCoordinate[1] + length;
       for (let y = startCoordinate[1]; y < numberOfLoops; y++) {
@@ -45,7 +42,7 @@ function gameboardFactory(name) {
           alphabets.indexOf(startCoordinate[0]) > 10 ||
           alphabets.indexOf(startCoordinate[0]) < 1
         )
-          return 'Error. Ship placement exceeds board size';
+          return;
         ship.position.push([startCoordinate[0], y]);
       }
     }
@@ -62,16 +59,17 @@ function gameboardFactory(name) {
           x < 1 ||
           startCoordinate[1] > 10 ||
           startCoordinate[1] < 1
-        ) {
-          console.log(occupiedCoordinates);
-          return 'Error. Ship placement exceeds board size';
-        }
+        )
+          return;
         ship.position.push([alphabets[x], startCoordinate[1]]);
       }
     }
 
     alignment === 'vertical' ? placeVertical() : placeHorizontal();
-    occupiedCoordinates.push(ship.position);
+
+    if (ship.position.length !== length)
+      return 'Error. Ship placement exceeds board size';
+
     return ship.position;
   }
 

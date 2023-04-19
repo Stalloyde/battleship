@@ -5,7 +5,7 @@ import playerFactory from '../player/player';
 const player = playerFactory('Stalloyde');
 const gameboard = gameboardFactory(player);
 
-test('place ship', () => {
+test('place ship vertical', () => {
   const shipA = shipsFactory(5);
   expect(gameboard.placeShip(shipA, 'vertical', ['A', 1])).toEqual([
     ['A', 1],
@@ -22,7 +22,10 @@ test('place ship', () => {
     ['A', 5],
     ['A', 6],
   ]);
+});
 
+test('place ship horizontal', () => {
+  const shipA = shipsFactory(5);
   expect(gameboard.placeShip(shipA, 'horizontal', ['A', 1])).toEqual([
     ['A', 1],
     ['B', 1],
@@ -54,7 +57,21 @@ test('place ship', () => {
     ['I', 6],
     ['J', 6],
   ]);
+});
 
+// test('no overlapping ship placement', () => {
+//   const shipA = shipsFactory(5);
+//   const shipB = shipsFactory(5);
+//   const positionA = gameboard.placeShip(shipA, 'horizontal', ['F', 6]);
+//   const positionB = gameboard.placeShip(shipB, 'horizontal', ['F', 6]);
+//   console.log(positionA);
+//   console.log(positionB);
+
+//   expect(gameboard.checkIfOverlap());
+// });
+
+test('no placement that exceeds board size', () => {
+  const shipA = shipsFactory(5);
   expect(gameboard.placeShip(shipA, 'horizontal', ['G', 0])).toBe(
     'Error. Ship placement exceeds board size'
   );
