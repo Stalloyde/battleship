@@ -34,8 +34,12 @@ function appendYAxisLabel() {
     }
   });
 }
+function generateCoordinates(x, y) {
+  return `${String.fromCharCode(x + 64)},${y}`;
+}
 
 function appendGrid(containerToAppendOn, gameboardToCreateGridFrom) {
+  gameboardToCreateGridFrom.createGrid();
   const gridContainer = document.createElement('div');
 
   gameboardToCreateGridFrom === playerGameboard
@@ -44,13 +48,14 @@ function appendGrid(containerToAppendOn, gameboardToCreateGridFrom) {
 
   containerToAppendOn.appendChild(gridContainer);
 
-  const gridsArray = gameboardToCreateGridFrom.createGrid();
-  gridsArray.forEach((item) => {
-    const grid = document.createElement('div');
-    grid.classList.add(`${gameboardToCreateGridFrom.gameboardOwner}`, 'grid');
-    grid.setAttribute('coordinate', item);
-    gridContainer.appendChild(grid);
-  });
+  for (let y = 1; y < 11; y++) {
+    for (let x = 1; x < 11; x++) {
+      const grid = document.createElement('div');
+      grid.classList.add(`${gameboardToCreateGridFrom.gameboardOwner}`, 'grid');
+      grid.setAttribute('coordinate', generateCoordinates(x, y));
+      gridContainer.appendChild(grid);
+    }
+  }
 }
 
 appendXAxisLabel();
@@ -78,9 +83,9 @@ const destroyer = playerGameboard.placeShip(
 
 const submarine = playerGameboard.placeShip(
   playerGameboard.allShips.submarine,
-  'horizontal',
-  ['H', 6]
-); //H,6..I,6...J,6
+  'vertical',
+  ['H', 1]
+); //H,1..H,2...H,3... OVERLAPP
 
 const patrolBoat = playerGameboard.placeShip(
   playerGameboard.allShips.patrolBoat,
