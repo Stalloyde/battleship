@@ -36,7 +36,7 @@ function gameboardFactory(name) {
 
     ship.position = [];
 
-    if (alignment === 'vertical') {
+    function placeVertical() {
       const numberOfLoops = startCoordinate[1] + length;
       for (let y = startCoordinate[1]; y < numberOfLoops; y++) {
         if (
@@ -50,7 +50,7 @@ function gameboardFactory(name) {
       }
     }
 
-    if (alignment === 'horizontal') {
+    function placeHorizontal() {
       const numberOfLoops = alphabets.indexOf(startCoordinate[0]) + length;
       for (
         let x = alphabets.indexOf(startCoordinate[0]);
@@ -63,12 +63,14 @@ function gameboardFactory(name) {
           startCoordinate[1] > 10 ||
           startCoordinate[1] < 1
         ) {
+          console.log(occupiedCoordinates);
           return 'Error. Ship placement exceeds board size';
         }
         ship.position.push([alphabets[x], startCoordinate[1]]);
       }
     }
 
+    alignment === 'vertical' ? placeVertical() : placeHorizontal();
     occupiedCoordinates.push(ship.position);
     return ship.position;
   }
@@ -88,11 +90,11 @@ function gameboardFactory(name) {
   };
 
   // for testing purposes only.. uncomment to pass tests
-  placeShip(allShips.carrier, 'vertical', ['A', 1]); //1,1...1,2...1,3...1,4...1,5
-  placeShip(allShips.battleship, 'vertical', ['B', 1]); //2,1...2,2...2,3...2,4...2,5
-  placeShip(allShips.destroyer, 'vertical', ['C', 1]); //3,1...3,2...3,3
-  placeShip(allShips.submarine, 'vertical', ['D', 1]); //4,1...4,2...4,3
-  placeShip(allShips.patrolBoat, 'vertical', ['E', 1]); //5,1...5,2
+  placeShip(allShips.carrier, 'vertical', ['A', 1]); //A,1...A,2...A,3...A,4...A,5
+  placeShip(allShips.battleship, 'vertical', ['B', 1]); //B,1...B,2...B,3...B,4
+  placeShip(allShips.destroyer, 'vertical', ['C', 1]); //C,1...C,2...C,3
+  placeShip(allShips.submarine, 'vertical', ['D', 1]); //D,1...D,2...D,3
+  placeShip(allShips.patrolBoat, 'vertical', ['E', 1]); //E,1...E,2
 
   function receiveAttack(coordinate) {
     for (const ship in allShips) {
