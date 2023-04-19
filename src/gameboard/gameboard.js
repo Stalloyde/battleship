@@ -12,7 +12,7 @@ function gameboardFactory(name) {
     const gridsArray = [];
     for (let y = 1; y < 11; y++) {
       for (let x = 1; x < 11; x++) {
-        gridsArray.push([`${String.fromCharCode(x + 64)},${y}`]);
+        gridsArray.push([]);
       }
     }
     return gridsArray;
@@ -32,7 +32,9 @@ function gameboardFactory(name) {
       'I',
       'J',
     ];
+
     ship.position = [];
+
     function placeVertical() {
       const numberOfLoops = startCoordinate[1] + length;
       for (let y = startCoordinate[1]; y < numberOfLoops; y++) {
@@ -67,9 +69,9 @@ function gameboardFactory(name) {
 
     alignment === 'vertical' ? placeVertical() : placeHorizontal();
 
-    if (ship.position.length !== length)
+    if (ship.position.length !== length) {
       return 'Error. Ship placement exceeds board size';
-
+    }
     return ship.position;
   }
 
@@ -87,7 +89,8 @@ function gameboardFactory(name) {
     patrolBoat,
   };
 
-  // for testing purposes only.. uncomment to pass tests
+  // for testing purposes only.. uncomment to pass tests in player.tests
+  //tried moving it to player.test.js but that causes currentShipPosition = allShips[ship].position in receiveAttack() to be undefined
   placeShip(allShips.carrier, 'vertical', ['A', 1]); //A,1...A,2...A,3...A,4...A,5
   placeShip(allShips.battleship, 'vertical', ['B', 1]); //B,1...B,2...B,3...B,4
   placeShip(allShips.destroyer, 'vertical', ['C', 1]); //C,1...C,2...C,3
