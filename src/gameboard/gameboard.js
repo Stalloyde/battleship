@@ -7,31 +7,23 @@ function gameboardFactory(name) {
   const gameboardOwner = name.name;
   const missedShots = [];
   const hitShots = [];
+  const gridsArray = [];
+  const yAxis = 10;
+  const xAxis = 10;
 
   function createGrid() {
-    const gridsArray = [];
-    for (let y = 1; y < 11; y++) {
-      for (let x = 1; x < 11; x++) {
-        gridsArray.push([]);
+    for (let i = 0; i < yAxis; i++) {
+      gridsArray[i] = [];
+      for (let j = 0; j < xAxis; j++) {
+        gridsArray[i][j] = [];
       }
+      //String.fromCharCode(j + 65), i + 1
     }
+    console.log(gridsArray);
     return gridsArray;
   }
-
   function placeShip(ship, alignment, startCoordinate, length = ship.length) {
-    const alphabets = [
-      'NULL',
-      'A',
-      'B',
-      'C',
-      'D',
-      'E',
-      'F',
-      'G',
-      'H',
-      'I',
-      'J',
-    ];
+    const alphabets = [null, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 
     ship.position = [];
 
@@ -114,6 +106,7 @@ function gameboardFactory(name) {
   }
   return {
     gameboardOwner,
+    gridsArray,
     createGrid,
     placeShip,
     receiveAttack,
