@@ -39,7 +39,6 @@ function generateCoordinates(x, y) {
 }
 
 function appendGrid(containerToAppendOn, gameboardToCreateGridFrom) {
-  gameboardToCreateGridFrom.createGrid();
   const gridContainer = document.createElement('div');
 
   gameboardToCreateGridFrom === playerGameboard
@@ -66,7 +65,7 @@ appendGrid(playerGameboardContainer, playerGameboard);
 const carrier = playerGameboard.placeShip(
   playerGameboard.allShips.carrier,
   'vertical',
-  ['A', 1]
+  ['A', 3]
 ); //A,1...A,2...A,3...A,4...A,5
 
 const battleship = playerGameboard.placeShip(
