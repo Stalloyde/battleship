@@ -1,6 +1,7 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
+import { create } from 'lodash';
 import shipsFactory from '../ships/ship';
 
 function gameboardFactory(name) {
@@ -17,11 +18,12 @@ function gameboardFactory(name) {
       for (let j = 0; j < xAxis; j++) {
         gridsArray[i][j] = [];
       }
-      //String.fromCharCode(j + 65), i + 1
     }
-    console.log(gridsArray);
     return gridsArray;
   }
+
+  createGrid();
+
   function placeShip(ship, alignment, startCoordinate, length = ship.length) {
     const alphabets = [null, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 
@@ -64,6 +66,12 @@ function gameboardFactory(name) {
     if (ship.position.length !== length) {
       return 'Error. Ship placement exceeds board size';
     }
+
+    ship.position.forEach((coordinate) => {
+      const x = coordinate[0].charCodeAt(0) - 64;
+      const y = coordinate[1];
+      gridsArray[y - 1][x - 1] = [coordinate[0], y];
+    });
     return ship.position;
   }
 
@@ -82,7 +90,7 @@ function gameboardFactory(name) {
   };
 
   // for testing purposes only.. uncomment to pass tests in player.tests
-  //tried moving it to player.test.js but that causes currentShipPosition = allShips[ship].position in receiveAttack() to be undefined
+  // //tried moving it to player.test.js but that causes currentShipPosition = allShips[ship].position in receiveAttack() to be undefined
   placeShip(allShips.carrier, 'vertical', ['A', 1]); //A,1...A,2...A,3...A,4...A,5
   placeShip(allShips.battleship, 'vertical', ['B', 1]); //B,1...B,2...B,3...B,4
   placeShip(allShips.destroyer, 'vertical', ['C', 1]); //C,1...C,2...C,3
