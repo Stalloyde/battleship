@@ -2,6 +2,7 @@
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
 import { create } from 'lodash';
+import { check } from 'prettier';
 import shipsFactory from '../ships/ship';
 
 function gameboardFactory(name) {
@@ -12,7 +13,7 @@ function gameboardFactory(name) {
   const yAxis = 10;
   const xAxis = 10;
 
-  function createGrid() {
+  function create2DArray() {
     for (let i = 0; i < yAxis; i++) {
       gridsArray[i] = [];
       for (let j = 0; j < xAxis; j++) {
@@ -22,12 +23,36 @@ function gameboardFactory(name) {
     return gridsArray;
   }
 
-  createGrid();
-
   function placeShip(ship, alignment, startCoordinate, length = ship.length) {
     const alphabets = [null, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 
     ship.position = [];
+
+    function fill2DArray() {
+      ship.position.forEach((coordinate) => {
+        const x = coordinate[0].charCodeAt(0) - 64;
+        const y = coordinate[1];
+        gridsArray[y - 1][x - 1] = [coordinate[0], y];
+      });
+    }
+
+    function checkIfShipPlacementExceedsBoardSize() {
+      if (ship.position.length !== length) {
+        return 'Error. Ship placement exceeds board size';
+      }
+    }
+
+    function checkIfShipPlacementOverlapsAnother() {
+      const allOccupiedPositions = [];
+
+      gridsArray.forEach((subArray) => {
+        subArray.forEach((item) => {
+          if (item.length > 0) {
+            allOccupiedPositions.push(item);
+          }
+        });
+      });
+    }
 
     function placeVertical() {
       const numberOfLoops = startCoordinate[1] + length;
@@ -62,18 +87,14 @@ function gameboardFactory(name) {
     }
 
     alignment === 'vertical' ? placeVertical() : placeHorizontal();
+    checkIfShipPlacementExceedsBoardSize();
+    checkIfShipPlacementOverlapsAnother();
+    fill2DArray();
 
-    if (ship.position.length !== length) {
-      return 'Error. Ship placement exceeds board size';
-    }
-
-    ship.position.forEach((coordinate) => {
-      const x = coordinate[0].charCodeAt(0) - 64;
-      const y = coordinate[1];
-      gridsArray[y - 1][x - 1] = [coordinate[0], y];
-    });
     return ship.position;
   }
+
+  create2DArray();
 
   const carrier = shipsFactory(5);
   const battleship = shipsFactory(4);
@@ -90,12 +111,12 @@ function gameboardFactory(name) {
   };
 
   // for testing purposes only.. uncomment to pass tests in player.tests
-  // //tried moving it to player.test.js but that causes currentShipPosition = allShips[ship].position in receiveAttack() to be undefined
-  placeShip(allShips.carrier, 'vertical', ['A', 1]); //A,1...A,2...A,3...A,4...A,5
-  placeShip(allShips.battleship, 'vertical', ['B', 1]); //B,1...B,2...B,3...B,4
-  placeShip(allShips.destroyer, 'vertical', ['C', 1]); //C,1...C,2...C,3
-  placeShip(allShips.submarine, 'vertical', ['D', 1]); //D,1...D,2...D,3
-  placeShip(allShips.patrolBoat, 'vertical', ['E', 1]); //E,1...E,2
+  //tried moving it to player.test.js but that causes currentShipPosition = allShips[ship].position in receiveAttack() to be undefined
+  // placeShip(allShips.carrier, 'vertical', ['A', 1]); //A,1...A,2...A,3...A,4...A,5
+  // placeShip(allShips.battleship, 'vertical', ['B', 1]); //B,1...B,2...B,3...B,4
+  // placeShip(allShips.destroyer, 'vertical', ['C', 1]); //C,1...C,2...C,3
+  // placeShip(allShips.submarine, 'vertical', ['D', 1]); //D,1...D,2...D,3
+  // placeShip(allShips.patrolBoat, 'vertical', ['E', 1]); //E,1...E,2
 
   function receiveAttack(coordinate) {
     for (const ship in allShips) {
@@ -115,7 +136,7 @@ function gameboardFactory(name) {
   return {
     gameboardOwner,
     gridsArray,
-    createGrid,
+    create2DArray,
     placeShip,
     receiveAttack,
     allShips,
