@@ -2,11 +2,16 @@ import { random } from 'lodash';
 import gameboardFactory from '../gameboard/gameboard';
 import shipsFactory from '../ships/ship';
 
-const playerGameboard = gameboardFactory('Stalloyde');
-const computerGameboard = gameboardFactory('Computer');
-
 function playerFactory(name = 'Computer') {
-  function attackActionOnOpponentGameBoard(coordinate, opponentGameboard) {
+  function randomCoordinate() {
+    const randomArray = [
+      Math.floor(Math.random() * (10 - 1) + 1),
+      Math.floor(Math.random() * (10 - 1) + 1),
+    ];
+    return randomArray;
+  }
+
+  function attack(opponentGameboard, coordinate = randomCoordinate()) {
     const shotAttempts = opponentGameboard.hitShots.concat(
       opponentGameboard.missedShots
     );
@@ -16,22 +21,11 @@ function playerFactory(name = 'Computer') {
         return 'Cannot attack same coordinates twice';
       }
     }
-    return opponentGameboard.receiveAttack(coordinate);
-  }
 
-  function randomCoordinate() {
-    const randomArray = [
-      Math.floor(Math.random() * (10 - 1) + 1),
-      Math.floor(Math.random() * (10 - 1) + 1),
-    ];
-    return randomArray;
-  }
-
-  function attack(coordinate) {
     if (name !== 'Computer') {
-      return attackActionOnOpponentGameBoard(coordinate, computerGameboard);
+      return opponentGameboard.receiveAttack(coordinate);
     }
-    return attackActionOnOpponentGameBoard(randomCoordinate(), playerGameboard);
+    return opponentGameboard.receiveAttack(coordinate);
   }
 
   return { name, attack };
