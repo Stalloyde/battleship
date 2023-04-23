@@ -113,18 +113,10 @@ function gameboardFactory(name) {
     patrolBoat,
   };
 
-  // for testing purposes only.. uncomment to pass tests in player.tests
-  //tried moving it to player.test.js but that causes currentShipPosition = allShips[ship].position in receiveAttack() to be undefined
-  placeShip(allShips.carrier, 'vertical', ['A', 1]); //A,1...A,2...A,3...A,4...A,5
-  placeShip(allShips.battleship, 'vertical', ['B', 1]); //B,1...B,2...B,3...B,4
-  placeShip(allShips.destroyer, 'vertical', ['C', 1]); //C,1...C,2...C,3
-  placeShip(allShips.submarine, 'vertical', ['D', 1]); //D,1...D,2...D,3
-  placeShip(allShips.patrolBoat, 'vertical', ['E', 1]); //E,1...E,2
-
   function receiveAttack(coordinate) {
     for (const ship in allShips) {
       const currentShip = allShips[ship];
-      const currentShipPosition = allShips[ship].position;
+      const currentShipPosition = currentShip.position;
 
       for (let x = 0; x <= currentShipPosition.length - 1; x++) {
         if (currentShipPosition[x].join() === coordinate.join()) {
@@ -136,6 +128,7 @@ function gameboardFactory(name) {
     missedShots.push(coordinate);
     return 'Missed!';
   }
+
   return {
     gameboardOwner,
     gridsArray,
