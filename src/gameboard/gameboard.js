@@ -39,6 +39,7 @@ function gameboardFactory(name) {
 
     function checkIfShipPlacementOverlapsAnother() {
       const allOccupiedPositions = [];
+      let check = false;
 
       //collates all occupied positions on the 2D array in an array of arrays
       gridsArray.forEach((subArray) => {
@@ -48,6 +49,16 @@ function gameboardFactory(name) {
           }
         });
       });
+
+      for (let x = 0; x < ship.position.length - 1; x++) {
+        for (let i = 0; i < allOccupiedPositions.length - 1; i++) {
+          if (ship.position[x].join() === allOccupiedPositions[i].join()) {
+            check = true;
+            break;
+          }
+        }
+      }
+      return check;
     }
 
     function fill2DArray() {
@@ -91,10 +102,15 @@ function gameboardFactory(name) {
     }
 
     alignment === 'vertical' ? placeVertical() : placeHorizontal();
+
     if (checkIfShipPlacementExceedsBoardSize() === true) {
       return 'Error. Ship placement exceeds board size';
     }
-    checkIfShipPlacementOverlapsAnother();
+
+    if (checkIfShipPlacementOverlapsAnother() === true) {
+      return 'Error. Ship position overlaps another';
+    }
+
     fill2DArray();
     return ship.position;
   }
