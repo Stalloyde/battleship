@@ -50,8 +50,8 @@ function gameboardFactory(name) {
         });
       });
 
-      for (let x = 0; x < ship.position.length - 1; x++) {
-        for (let i = 0; i < allOccupiedPositions.length - 1; i++) {
+      for (let x = 0; x < ship.position.length; x++) {
+        for (let i = 0; i < allOccupiedPositions.length; i++) {
           if (ship.position[x].join() === allOccupiedPositions[i].join()) {
             check = true;
             break;
