@@ -1,8 +1,6 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
-import { create, random } from 'lodash';
-import { check } from 'prettier';
 import shipsFactory from '../ships/ship';
 
 function gameboardFactory(name) {
@@ -121,16 +119,30 @@ function gameboardFactory(name) {
     }
 
     alignment === 'vertical' ? placeVertical() : placeHorizontal();
-    if (checkIfShipPlacementExceedsBoardSize() === true) {
+
+    if (
+      checkIfShipPlacementExceedsBoardSize() === true &&
+      gameboardOwner === 'Stalloyde'
+    ) {
       return 'Error. Ship placement exceeds board size';
     }
 
-    if (checkIfShipPlacementOverlapsAnother() === true) {
+    if (
+      checkIfShipPlacementOverlapsAnother() === true &&
+      gameboardOwner === 'Stalloyde'
+    ) {
       return 'Error. Ship position overlaps another';
     }
-    //two checks above doesn't allow ship.position to be returned, BUT still allows the illegal placement to be pushed into ship.position
-    // need to find a way to assimilate the two checks insde placeVertical() & placeHorizontal()
-    // if either checsk return true, no pusing into ship.position & return error instead.
+
+    if (
+      (checkIfShipPlacementExceedsBoardSize() === true &&
+        gameboardOwner === 'Computer') ||
+      (checkIfShipPlacementOverlapsAnother() === true &&
+        gameboardOwner === 'Computer')
+    ) {
+      placeShip(ship);
+    }
+
     fill2DArray();
     return ship.position;
   }

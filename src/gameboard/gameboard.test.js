@@ -4,6 +4,8 @@ import playerFactory from '../player/player';
 
 const player = playerFactory('Stalloyde');
 const playerGameboard = gameboardFactory(player);
+const computer = playerFactory();
+const computerGameboard = gameboardFactory(computer);
 
 test('place ship vertical', () => {
   const shipA = shipsFactory(5);
@@ -57,6 +59,11 @@ test('place ship horizontal', () => {
     ['I', 6],
     ['J', 6],
   ]);
+});
+
+test('random computer ship placement', () => {
+  const shipA = shipsFactory(5);
+  expect(computerGameboard.placeShip(shipA).length).toBe(5);
 });
 
 test('no placement that exceeds board size', () => {
