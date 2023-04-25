@@ -21,7 +21,9 @@ export function appendShip(ship, gameboardToAppendShipTo) {
   }
 
   const shipPosition = getCurrentlyAppendingShipPosition();
-  const gridNodes = document.querySelectorAll(`.${player.name}`);
+  const gridNodes = document.querySelectorAll(
+    `.${gameboardToAppendShipTo.gameboardOwner}`
+  );
 
   gridNodes.forEach((node) => {
     const coordinate = node.getAttribute('coordinate');
