@@ -89,7 +89,7 @@ const submarine = playerGameboard.placeShip(
 const patrolBoat = playerGameboard.placeShip(
   playerGameboard.allShips.patrolBoat,
   'horizontal',
-  ['H', 1]
+  ['E', 2]
 ); //E,1...E,2
 
 appendShip(carrier, playerGameboard);
@@ -97,3 +97,31 @@ appendShip(battleship, playerGameboard);
 appendShip(destroyer, playerGameboard);
 appendShip(submarine, playerGameboard);
 appendShip(patrolBoat, playerGameboard);
+
+const computerCarrier = computerGameboard.placeShip(
+  computerGameboard.allShips.carrier
+);
+
+const computerBattleship = computerGameboard.placeShip(
+  computerGameboard.allShips.battleship
+);
+
+const computerDestroyer = computerGameboard.placeShip(
+  computerGameboard.allShips.destroyer
+);
+
+const computerSubmarine = computerGameboard.placeShip(
+  computerGameboard.allShips.submarine
+);
+
+const computerPatrolBoat = computerGameboard.placeShip(
+  computerGameboard.allShips.patrolBoat
+);
+
+appendShip(computerCarrier, computerGameboard);
+appendShip(computerBattleship, computerGameboard);
+appendShip(computerDestroyer, computerGameboard);
+appendShip(computerSubmarine, computerGameboard);
+appendShip(computerPatrolBoat, computerGameboard);
+
+console.log(computerGameboard);
