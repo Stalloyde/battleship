@@ -1,7 +1,7 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
-import { create } from 'lodash';
+import { create, random } from 'lodash';
 import { check } from 'prettier';
 import shipsFactory from '../ships/ship';
 
@@ -12,6 +12,20 @@ function gameboardFactory(name) {
   const gridsArray = [];
   const yAxis = 10;
   const xAxis = 10;
+
+  function randomPositionCoordinate() {
+    const randomArray = [
+      String.fromCharCode(Math.floor(Math.random() * (10 - 1) + 1) + 64),
+      Math.floor(Math.random() * (11 - 1) + 1),
+    ];
+
+    return randomArray;
+  }
+
+  function randomAlignment() {
+    if (Math.floor(Math.random() * 10) % 2 === 0) return 'vertical';
+    return 'horizontal';
+  }
 
   function create2DArray() {
     for (let i = 0; i < yAxis; i++) {
@@ -25,7 +39,12 @@ function gameboardFactory(name) {
 
   create2DArray();
 
-  function placeShip(ship, alignment, startCoordinate, length = ship.length) {
+  function placeShip(
+    ship,
+    alignment = randomAlignment(),
+    startCoordinate = randomPositionCoordinate(),
+    length = ship.length
+  ) {
     const alphabets = [null, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 
     ship.position = [];
@@ -102,7 +121,6 @@ function gameboardFactory(name) {
     }
 
     alignment === 'vertical' ? placeVertical() : placeHorizontal();
-
     if (checkIfShipPlacementExceedsBoardSize() === true) {
       return 'Error. Ship placement exceeds board size';
     }
@@ -110,7 +128,9 @@ function gameboardFactory(name) {
     if (checkIfShipPlacementOverlapsAnother() === true) {
       return 'Error. Ship position overlaps another';
     }
-
+    //two checks above doesn't allow ship.position to be returned, BUT still allows the illegal placement to be pushed into ship.position
+    // need to find a way to assimilate the two checks insde placeVertical() & placeHorizontal()
+    // if either checsk return true, no pusing into ship.position & return error instead.
     fill2DArray();
     return ship.position;
   }
@@ -154,6 +174,7 @@ function gameboardFactory(name) {
     allShips,
     hitShots,
     missedShots,
+    randomPositionCoordinate,
   };
 }
 
