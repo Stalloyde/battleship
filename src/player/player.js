@@ -3,15 +3,15 @@ import gameboardFactory from '../gameboard/gameboard';
 import shipsFactory from '../ships/ship';
 
 function playerFactory(name = 'Computer') {
-  function randomCoordinate() {
+  function randomAttackCoordinate() {
     const randomArray = [
-      Math.floor(Math.random() * (10 - 1) + 1),
-      Math.floor(Math.random() * (10 - 1) + 1),
+      String.fromCharCode(Math.floor(Math.random() * (10 - 1) + 1) + 64),
+      Math.floor(Math.random() * (11 - 1) + 1),
     ];
     return randomArray;
   }
 
-  function attack(opponentGameboard, coordinate = randomCoordinate()) {
+  function attack(opponentGameboard, coordinate = randomAttackCoordinate()) {
     const shotAttempts = opponentGameboard.hitShots.concat(
       opponentGameboard.missedShots
     );
@@ -28,7 +28,7 @@ function playerFactory(name = 'Computer') {
     return opponentGameboard.receiveAttack(coordinate);
   }
 
-  return { name, attack };
+  return { name, attack, randomAttackCoordinate };
 }
 
 export default playerFactory;
