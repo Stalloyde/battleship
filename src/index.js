@@ -2,7 +2,13 @@ import _, { create } from 'lodash';
 import shipsFactory from './ships/ship';
 import gameboardFactory from './gameboard/gameboard';
 import playerFactory from './player/player';
-import { appendShip, playerGameboard, computerGameboard } from './UI/UI';
+import {
+  appendShip,
+  player,
+  computer,
+  playerGameboard,
+  computerGameboard,
+} from './UI/UI';
 import './style.css';
 
 const playerGameboardContainer = document.querySelector(
@@ -66,31 +72,30 @@ const carrier = playerGameboard.placeShip(
   playerGameboard.allShips.carrier,
   'vertical',
   ['A', 3]
-); //A,1...A,2...A,3...A,4...A,5
-
+);
 const battleship = playerGameboard.placeShip(
   playerGameboard.allShips.battleship,
   'vertical',
   ['E', 5]
-); //E,5...E,6...E,7...E,8
+);
 
 const destroyer = playerGameboard.placeShip(
   playerGameboard.allShips.destroyer,
   'horizontal',
   ['C', 10]
-); //C,10...D,10..D,10
+);
 
 const submarine = playerGameboard.placeShip(
   playerGameboard.allShips.submarine,
   'vertical',
   ['H', 1]
-); //H,1..H,2...H,3... OVERLAPP
+);
 
 const patrolBoat = playerGameboard.placeShip(
   playerGameboard.allShips.patrolBoat,
   'horizontal',
   ['E', 2]
-); //E,1...E,2
+);
 
 appendShip(carrier, playerGameboard);
 appendShip(battleship, playerGameboard);
@@ -124,4 +129,17 @@ appendShip(computerDestroyer, computerGameboard);
 appendShip(computerSubmarine, computerGameboard);
 appendShip(computerPatrolBoat, computerGameboard);
 
-console.log(computerGameboard);
+//player attack computer gameboard
+//player.attack(computergameboard's coordinate)
+//computer gameboard.receiveAttack
+
+//computer attack player gameboard
+//computer.attack(playergameboard's coordinate)
+//player gameboard.receinpmveAttack
+
+//how to ensure 1 turn each?
+
+console.log(computer.attack(playerGameboard, ['E,2']));
+console.log(playerGameboard.allShips.patrolBoat);
+console.log(computer.attack(playerGameboard, ['F,2']));
+console.log(playerGameboard.allShips.patrolBoat);

@@ -33,8 +33,8 @@ computerGameboard.placeShip(computerGameboard.allShips.patrolBoat, 'vertical', [
 ]);
 
 test('player attack', () => {
-  expect(player.attack(computerGameboard, ['A', 1])).toBe(4);
-  expect(player.attack(computerGameboard, ['A', 2])).toBe(3);
+  expect(player.attack(computerGameboard, ['A', 1])).toBe(`health:${4}`);
+  expect(player.attack(computerGameboard, ['A', 2])).toBe(`health:${3}`);
   expect(player.attack(computerGameboard, ['A', 1])).toBe(
     'Cannot attack same coordinates twice'
   );
@@ -68,51 +68,51 @@ playerGameboard.placeShip(playerGameboard.allShips.patrolBoat, 'vertical', [
 test('computer attack with random coordinate', () => {
   expect([
     'Missed!',
-    4,
-    3,
-    2,
-    1,
+    `health:${4}`,
+    `health:${3}`,
+    `health:${2}`,
+    `health:${1}`,
     'Cannot attack same coordinates twice',
-    'Your ship has been sunk!',
+    `isSunk:${true}`,
   ]).toContain(computer.attack(playerGameboard));
 
   expect([
     'Missed!',
-    4,
-    3,
-    2,
-    1,
+    `health:${4}`,
+    `health:${3}`,
+    `health:${2}`,
+    `health:${1}`,
     'Cannot attack same coordinates twice',
-    'Your ship has been sunk!',
+    `isSunk:${true}`,
   ]).toContain(computer.attack(playerGameboard));
 
   expect([
     'Missed!',
-    4,
-    3,
-    2,
-    1,
+    `health:${4}`,
+    `health:${3}`,
+    `health:${2}`,
+    `health:${1}`,
     'Cannot attack same coordinates twice',
-    'Your ship has been sunk!',
+    `isSunk:${true}`,
   ]).toContain(computer.attack(playerGameboard));
 
   expect([
     'Missed!',
-    4,
-    3,
-    2,
-    1,
+    `health:${4}`,
+    `health:${3}`,
+    `health:${2}`,
+    `health:${1}`,
     'Cannot attack same coordinates twice',
-    'Your ship has been sunk!',
+    `isSunk:${true}`,
   ]).toContain(computer.attack(playerGameboard));
 
   expect([
     'Missed!',
-    4,
-    3,
-    2,
-    1,
+    `health:${4}`,
+    `health:${3}`,
+    `health:${2}`,
+    `health:${1}`,
     'Cannot attack same coordinates twice',
-    'Your ship has been sunk!',
+    `isSunk:${true}`,
   ]).toContain(computer.attack(playerGameboard));
 });

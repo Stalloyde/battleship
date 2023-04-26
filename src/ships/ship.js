@@ -1,19 +1,23 @@
 function shipsFactory(length) {
   let health = length;
+  let isSunk = false;
 
   function sunk() {
-    return 'Your ship has been sunk!';
+    isSunk = true;
+    return isSunk;
   }
 
   function hit() {
     health -= 1;
-    if (health <= 0) {
-      return sunk();
+    if (health === 0) {
+      sunk();
+      return `isSunk:${isSunk}`;
     }
-    return health;
+
+    return `health:${health}`;
   }
 
-  return { length, hit, sunk };
+  return { health, length, hit, sunk, isSunk };
 }
 
 export default shipsFactory;

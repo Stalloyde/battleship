@@ -111,16 +111,12 @@ test('receive attack hit', () => {
     1,
   ]);
 
-  expect(playerGameboard.receiveAttack(['B', 1])).toBe(3);
-  expect(playerGameboard.receiveAttack(['B', 2])).toBe(2);
-  expect(playerGameboard.receiveAttack(['B', 3])).toBe(1);
-  expect(playerGameboard.receiveAttack(['B', 4])).toBe(
-    'Your ship has been sunk!'
-  );
-  expect(playerGameboard.receiveAttack(['E', 1])).toBe(1);
-  expect(playerGameboard.receiveAttack(['E', 2])).toBe(
-    'Your ship has been sunk!'
-  );
+  expect(playerGameboard.receiveAttack(['B', 1])).toBe(`health:${3}`);
+  expect(playerGameboard.receiveAttack(['B', 2])).toBe(`health:${2}`);
+  expect(playerGameboard.receiveAttack(['B', 3])).toBe(`health:${1}`);
+  expect(playerGameboard.receiveAttack(['B', 4])).toBe(`isSunk:true`);
+  expect(playerGameboard.receiveAttack(['E', 1])).toBe(`health:${1}`);
+  expect(playerGameboard.receiveAttack(['E', 2])).toBe(`isSunk:true`);
 });
 
 test('receive attack miss', () => {

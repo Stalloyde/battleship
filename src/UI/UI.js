@@ -2,8 +2,8 @@ import shipsFactory from '../ships/ship';
 import gameboardFactory from '../gameboard/gameboard';
 import playerFactory from '../player/player';
 
-const player = playerFactory('Stalloyde');
-const computer = playerFactory();
+export const player = playerFactory('Stalloyde');
+export const computer = playerFactory();
 export const playerGameboard = gameboardFactory(player);
 export const computerGameboard = gameboardFactory(computer);
 
