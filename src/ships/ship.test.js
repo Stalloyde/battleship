@@ -1,7 +1,7 @@
 import shipsFactory from './ship';
 
 test('hit & sunk', () => {
-  const shipA = shipsFactory(5);
+  const shipA = shipsFactory('carrier', 5);
   expect(shipA.hit()).toBe(`health:${4}`);
   expect(shipA.hit()).toBe(`health:${3}`);
   expect(shipA.hit()).toBe(`health:${2}`);
