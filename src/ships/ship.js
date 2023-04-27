@@ -1,23 +1,23 @@
-function shipsFactory(length) {
+function shipsFactory(name, length) {
+  const shipName = name;
   let health = length;
   let isSunk = false;
 
   function sunk() {
     isSunk = true;
-    return isSunk;
+    return `isSunk:${isSunk}`;
   }
 
   function hit() {
     health -= 1;
-    if (health === 0) {
-      sunk();
-      return `isSunk:${isSunk}`;
-    }
 
+    if (health === 0) {
+      return sunk();
+    }
     return `health:${health}`;
   }
 
-  return { health, length, hit, sunk, isSunk };
+  return { shipName, health, length, hit, sunk, isSunk };
 }
 
 export default shipsFactory;
