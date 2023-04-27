@@ -133,10 +133,9 @@ function gameboardFactory(name) {
     }
 
     if (
-      (checkIfShipPlacementExceedsBoardSize() === true &&
-        gameboardOwner === 'Computer') ||
-      (checkIfShipPlacementOverlapsAnother() === true &&
-        gameboardOwner === 'Computer')
+      (gameboardOwner === 'Computer' &&
+        checkIfShipPlacementExceedsBoardSize() === true) ||
+      checkIfShipPlacementOverlapsAnother() === true
     ) {
       placeShip(ship);
     }
@@ -160,7 +159,9 @@ function gameboardFactory(name) {
       });
     });
 
-    if (hitResults) return hitResults;
+    if (hitResults) {
+      return hitResults;
+    }
     missedShots.push(coordinate);
     return 'Missed!';
   }
