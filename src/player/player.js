@@ -21,10 +21,6 @@ function playerFactory(name = 'Computer') {
         return 'Cannot attack same coordinates twice';
       }
     }
-
-    if (name !== 'Computer') {
-      return opponentGameboard.receiveAttack(coordinate);
-    }
     return opponentGameboard.receiveAttack(coordinate);
   }
 
