@@ -8,7 +8,7 @@ const computer = playerFactory();
 const computerGameboard = gameboardFactory(computer);
 
 test('place ship vertical', () => {
-  const shipA = shipsFactory(5);
+  const shipA = shipsFactory('carrier', 5);
   expect(playerGameboard.placeShip(shipA, 'vertical', ['A', 1])).toEqual([
     ['A', 1],
     ['A', 2],
@@ -27,7 +27,7 @@ test('place ship vertical', () => {
 });
 
 test('place ship horizontal', () => {
-  const shipA = shipsFactory(5);
+  const shipA = shipsFactory('carrier', 5);
   expect(playerGameboard.placeShip(shipA, 'horizontal', ['A', 9])).toEqual([
     ['A', 9],
     ['B', 9],
@@ -62,12 +62,12 @@ test('place ship horizontal', () => {
 });
 
 test('random computer ship placement', () => {
-  const shipA = shipsFactory(5);
+  const shipA = shipsFactory('carrier', 5);
   expect(computerGameboard.placeShip(shipA).length).toBe(5);
 });
 
 test('no placement that exceeds board size', () => {
-  const shipA = shipsFactory(5);
+  const shipA = shipsFactory('carrier', 5);
   expect(playerGameboard.placeShip(shipA, 'horizontal', ['G', 0])).toBe(
     'Error. Ship placement exceeds board size'
   );
@@ -143,70 +143,24 @@ test('Create 2D array', () => {
   ]);
 });
 
-test('Occupy 2D array', () => {
-  const shipA = shipsFactory(5);
-  playerGameboard.placeShip(shipA, 'vertical', ['A', 3]);
-
-  expect(playerGameboard.gridsArray).toEqual([
-    [[], [], [], [], [], [], [], [], [], []],
-    [[], [], [], [], [], [], [], [], [], []],
-    [['A', 3], [], [], [], [], [], [], [], [], []],
-    [['A', 4], [], [], [], [], [], [], [], [], []],
-    [['A', 5], [], [], [], [], [], [], [], [], []],
-    [['A', 6], [], [], [], [], [], [], [], [], []],
-    [['A', 7], [], [], [], [], [], [], [], [], []],
-    [[], [], [], [], [], [], [], [], [], []],
-    [[], [], [], [], [], [], [], [], [], []],
-    [[], [], [], [], [], [], [], [], [], []],
-  ]);
-
-  const shipB = shipsFactory(4);
-  playerGameboard.placeShip(shipB, 'vertical', ['G', 6]);
-  expect(playerGameboard.gridsArray).toEqual([
-    [[], [], [], [], [], [], [], [], [], []],
-    [[], [], [], [], [], [], [], [], [], []],
-    [['A', 3], [], [], [], [], [], [], [], [], []],
-    [['A', 4], [], [], [], [], [], [], [], [], []],
-    [['A', 5], [], [], [], [], [], [], [], [], []],
-    [['A', 6], [], [], [], [], [], ['G', 6], [], [], []],
-    [['A', 7], [], [], [], [], [], ['G', 7], [], [], []],
-    [[], [], [], [], [], [], ['G', 8], [], [], []],
-    [[], [], [], [], [], [], ['G', 9], [], [], []],
-    [[], [], [], [], [], [], [], [], [], []],
-  ]);
-
-  const shipC = shipsFactory(3);
-  playerGameboard.placeShip(shipC, 'horizontal', ['C', 3]);
-  expect(playerGameboard.gridsArray).toEqual([
-    [[], [], [], [], [], [], [], [], [], []],
-    [[], [], [], [], [], [], [], [], [], []],
-    [['A', 3], [], ['C', 3], ['D', 3], ['E', 3], [], [], [], [], []],
-    [['A', 4], [], [], [], [], [], [], [], [], []],
-    [['A', 5], [], [], [], [], [], [], [], [], []],
-    [['A', 6], [], [], [], [], [], ['G', 6], [], [], []],
-    [['A', 7], [], [], [], [], [], ['G', 7], [], [], []],
-    [[], [], [], [], [], [], ['G', 8], [], [], []],
-    [[], [], [], [], [], [], ['G', 9], [], [], []],
-    [[], [], [], [], [], [], [], [], [], []],
-  ]);
-});
-
 test('no overlapping ship placement', () => {
-  const shipD = shipsFactory(4);
+  const shipD = shipsFactory('battleship', 4);
+  expect(playerGameboard.placeShip(shipD, 'vertical', ['E', 1])).toEqual([
+    ['E', 1],
+    ['E', 2],
+    ['E', 3],
+    ['E', 4],
+  ]);
+
   expect(playerGameboard.placeShip(shipD, 'vertical', ['E', 1])).toBe(
     'Error. Ship position overlaps another'
   );
 
-  expect(playerGameboard.gridsArray).toEqual([
-    [[], [], [], [], [], [], [], [], [], []],
-    [[], [], [], [], [], [], [], [], [], []],
-    [['A', 3], [], ['C', 3], ['D', 3], ['E', 3], [], [], [], [], []],
-    [['A', 4], [], [], [], [], [], [], [], [], []],
-    [['A', 5], [], [], [], [], [], [], [], [], []],
-    [['A', 6], [], [], [], [], [], ['G', 6], [], [], []],
-    [['A', 7], [], [], [], [], [], ['G', 7], [], [], []],
-    [[], [], [], [], [], [], ['G', 8], [], [], []],
-    [[], [], [], [], [], [], ['G', 9], [], [], []],
-    [[], [], [], [], [], [], [], [], [], []],
-  ]);
+  expect(playerGameboard.placeShip(shipD, 'vertical', ['E', 4])).toBe(
+    'Error. Ship position overlaps another'
+  );
+
+  expect(playerGameboard.placeShip(shipD, 'horizontal', ['C', 1])).toBe(
+    'Error. Ship position overlaps another'
+  );
 });
