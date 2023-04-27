@@ -7,30 +7,17 @@ const computer = playerFactory();
 const playerGameboard = gameboardFactory(player);
 const computerGameboard = gameboardFactory(computer);
 
-computerGameboard.placeShip(computerGameboard.allShips.carrier, 'vertical', [
-  'A',
-  1,
-]);
+const carrier = shipsFactory('carrier', 5);
+const battleship = shipsFactory('battleship', 4);
+const destroyer = shipsFactory('destroyer', 3);
+const submarine = shipsFactory('submarine', 3);
+const patrolBoat = shipsFactory('patrolBoat', 2);
 
-computerGameboard.placeShip(computerGameboard.allShips.battleship, 'vertical', [
-  'B',
-  1,
-]);
-
-computerGameboard.placeShip(computerGameboard.allShips.destroyer, 'vertical', [
-  'C',
-  1,
-]);
-
-computerGameboard.placeShip(computerGameboard.allShips.submarine, 'vertical', [
-  'D',
-  1,
-]);
-
-computerGameboard.placeShip(computerGameboard.allShips.patrolBoat, 'vertical', [
-  'E',
-  1,
-]);
+computerGameboard.placeShip(carrier, 'vertical', ['A', 1]);
+computerGameboard.placeShip(battleship, 'vertical', ['B', 1]);
+computerGameboard.placeShip(destroyer, 'vertical', ['C', 1]);
+computerGameboard.placeShip(submarine, 'vertical', ['D', 1]);
+computerGameboard.placeShip(patrolBoat, 'vertical', ['E', 1]);
 
 test('player attack', () => {
   expect(player.attack(computerGameboard, ['A', 1])).toBe(`health:${4}`);
@@ -40,30 +27,11 @@ test('player attack', () => {
   );
 });
 
-playerGameboard.placeShip(playerGameboard.allShips.carrier, 'vertical', [
-  'A',
-  1,
-]);
-
-playerGameboard.placeShip(playerGameboard.allShips.battleship, 'vertical', [
-  'B',
-  1,
-]);
-
-playerGameboard.placeShip(playerGameboard.allShips.destroyer, 'vertical', [
-  'C',
-  1,
-]);
-
-playerGameboard.placeShip(playerGameboard.allShips.submarine, 'vertical', [
-  'D',
-  1,
-]);
-
-playerGameboard.placeShip(playerGameboard.allShips.patrolBoat, 'vertical', [
-  'E',
-  1,
-]);
+playerGameboard.placeShip(carrier, 'vertical', ['A', 1]);
+playerGameboard.placeShip(battleship, 'vertical', ['B', 1]);
+playerGameboard.placeShip(destroyer, 'vertical', ['C', 1]);
+playerGameboard.placeShip(submarine, 'vertical', ['D', 1]);
+playerGameboard.placeShip(patrolBoat, 'vertical', ['E', 1]);
 
 test('computer attack with random coordinate', () => {
   expect([

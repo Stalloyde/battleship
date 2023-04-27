@@ -11,6 +11,12 @@ import {
 } from './UI/UI';
 import './style.css';
 
+const carrier = shipsFactory('carrier', 5);
+const battleship = shipsFactory('battleship', 4);
+const destroyer = shipsFactory('destroyer', 3);
+const submarine = shipsFactory('submarine', 3);
+const patrolBoat = shipsFactory('patrolBoat', 2);
+
 const playerGameboardContainer = document.querySelector(
   '.player-gameboard-container'
 );
@@ -68,60 +74,35 @@ appendYAxisLabel();
 appendGrid(computerGameboardContainer, computerGameboard);
 appendGrid(playerGameboardContainer, playerGameboard);
 
-const carrier = playerGameboard.placeShip(
-  playerGameboard.allShips.carrier,
-  'vertical',
-  ['A', 3]
-);
-const battleship = playerGameboard.placeShip(
-  playerGameboard.allShips.battleship,
-  'vertical',
-  ['E', 5]
-);
+const playerCarrier = playerGameboard.placeShip(carrier, 'vertical', ['A', 3]);
+const playerBattleship = playerGameboard.placeShip(battleship, 'vertical', [
+  'E',
+  5,
+]);
+const playerDestroyer = playerGameboard.placeShip(destroyer, 'horizontal', [
+  'C',
+  10,
+]);
+const playerSubmarine = playerGameboard.placeShip(submarine, 'vertical', [
+  'H',
+  1,
+]);
+const playerPatrolBoat = playerGameboard.placeShip(patrolBoat, 'horizontal', [
+  'E',
+  2,
+]);
 
-const destroyer = playerGameboard.placeShip(
-  playerGameboard.allShips.destroyer,
-  'horizontal',
-  ['C', 10]
-);
+appendShip(playerCarrier, playerGameboard);
+appendShip(playerBattleship, playerGameboard);
+appendShip(playerDestroyer, playerGameboard);
+appendShip(playerSubmarine, playerGameboard);
+appendShip(playerPatrolBoat, playerGameboard);
 
-const submarine = playerGameboard.placeShip(
-  playerGameboard.allShips.submarine,
-  'vertical',
-  ['H', 1]
-);
-
-const patrolBoat = playerGameboard.placeShip(
-  playerGameboard.allShips.patrolBoat,
-  'horizontal',
-  ['E', 2]
-);
-
-appendShip(carrier, playerGameboard);
-appendShip(battleship, playerGameboard);
-appendShip(destroyer, playerGameboard);
-appendShip(submarine, playerGameboard);
-appendShip(patrolBoat, playerGameboard);
-
-const computerCarrier = computerGameboard.placeShip(
-  computerGameboard.allShips.carrier
-);
-
-const computerBattleship = computerGameboard.placeShip(
-  computerGameboard.allShips.battleship
-);
-
-const computerDestroyer = computerGameboard.placeShip(
-  computerGameboard.allShips.destroyer
-);
-
-const computerSubmarine = computerGameboard.placeShip(
-  computerGameboard.allShips.submarine
-);
-
-const computerPatrolBoat = computerGameboard.placeShip(
-  computerGameboard.allShips.patrolBoat
-);
+const computerCarrier = computerGameboard.placeShip(carrier);
+const computerBattleship = computerGameboard.placeShip(battleship);
+const computerDestroyer = computerGameboard.placeShip(destroyer);
+const computerSubmarine = computerGameboard.placeShip(submarine);
+const computerPatrolBoat = computerGameboard.placeShip(patrolBoat);
 
 appendShip(computerCarrier, computerGameboard);
 appendShip(computerBattleship, computerGameboard);
@@ -140,6 +121,4 @@ appendShip(computerPatrolBoat, computerGameboard);
 //how to ensure 1 turn each?
 
 console.log(computer.attack(playerGameboard, ['E,2']));
-console.log(playerGameboard.allShips.patrolBoat);
 console.log(computer.attack(playerGameboard, ['F,2']));
-console.log(playerGameboard.allShips.patrolBoat);

@@ -8,19 +8,7 @@ export const playerGameboard = gameboardFactory(player);
 export const computerGameboard = gameboardFactory(computer);
 
 export function appendShip(ship, gameboardToAppendShipTo) {
-  function getCurrentlyAppendingShipPosition() {
-    for (const item in gameboardToAppendShipTo.allShips) {
-      const shipPositionString =
-        gameboardToAppendShipTo.allShips[item].position.join();
-      const toBeAppendedShipPositionString = ship.join();
-
-      if (shipPositionString === toBeAppendedShipPositionString) {
-        return gameboardToAppendShipTo.allShips[item].position;
-      }
-    }
-  }
-
-  const shipPosition = getCurrentlyAppendingShipPosition();
+  const shipPosition = ship;
   const gridNodes = document.querySelectorAll(
     `.${gameboardToAppendShipTo.gameboardOwner}`
   );

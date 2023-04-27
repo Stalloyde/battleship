@@ -29,7 +29,7 @@ function gameboardFactory(name) {
     for (let i = 0; i < yAxis; i++) {
       gridsArray[i] = [];
       for (let j = 0; j < xAxis; j++) {
-        gridsArray[i][j] = [];
+        gridsArray[i][j] = [String.fromCharCode(j + 65), i + 1];
       }
     }
     return gridsArray;
@@ -57,11 +57,10 @@ function gameboardFactory(name) {
       const allOccupiedPositions = [];
       let check = false;
 
-      //collates all occupied positions on the 2D array in an array of arrays
       gridsArray.forEach((subArray) => {
         subArray.forEach((item) => {
-          if (item.coordinate) {
-            allOccupiedPositions.push(item.coordinate);
+          if (item[1].length > 1) {
+            allOccupiedPositions.push(item[0]);
           }
         });
       });
@@ -81,10 +80,7 @@ function gameboardFactory(name) {
       ship.position.forEach((coordinate) => {
         const x = coordinate[0].charCodeAt(0) - 64;
         const y = coordinate[1];
-        gridsArray[y - 1][x - 1] = {
-          coordinate: [coordinate[0], y],
-          ship,
-        };
+        gridsArray[y - 1][x - 1] = [coordinate, ship];
       });
     }
 
@@ -149,32 +145,22 @@ function gameboardFactory(name) {
     return ship.position;
   }
 
-  const carrier = shipsFactory('carrier', 5);
-  const battleship = shipsFactory('battleship', 4);
-  const destroyer = shipsFactory('destroyer', 3);
-  const submarine = shipsFactory('submarine', 3);
-  const patrolBoat = shipsFactory('patrolBoat', 2);
-
-  const allShips = {
-    carrier,
-    battleship,
-    destroyer,
-    submarine,
-    patrolBoat,
-  };
-  //make use of gridsArray
   function receiveAttack(coordinate) {
-    for (const ship in allShips) {
-      const currentShip = allShips[ship];
-      const currentShipPosition = currentShip.position;
+    let hitResults;
 
-      for (let x = 0; x <= currentShipPosition.length - 1; x++) {
-        if (currentShipPosition[x].join() === coordinate.join()) {
-          hitShots.push(coordinate);
-          return currentShip.hit();
+    gridsArray.forEach((subArray) => {
+      subArray.forEach((item) => {
+        if (item[1].length > 1) {
+          if (item[0].join() === coordinate.join()) {
+            const currentShip = item[1];
+            hitShots.push(coordinate);
+            hitResults = currentShip.hit();
+          }
         }
-      }
-    }
+      });
+    });
+
+    if (hitResults) return hitResults;
     missedShots.push(coordinate);
     return 'Missed!';
   }
@@ -185,7 +171,6 @@ function gameboardFactory(name) {
     create2DArray,
     placeShip,
     receiveAttack,
-    allShips,
     hitShots,
     missedShots,
     randomPositionCoordinate,
