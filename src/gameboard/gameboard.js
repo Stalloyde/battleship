@@ -44,7 +44,6 @@ function gameboardFactory(name) {
     length = ship.length
   ) {
     const alphabets = [null, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-
     ship.position = [];
 
     function checkIfShipPlacementExceedsBoardSize() {
@@ -61,8 +60,8 @@ function gameboardFactory(name) {
       //collates all occupied positions on the 2D array in an array of arrays
       gridsArray.forEach((subArray) => {
         subArray.forEach((item) => {
-          if (item.length > 0) {
-            allOccupiedPositions.push(item);
+          if (item.coordinate) {
+            allOccupiedPositions.push(item.coordinate);
           }
         });
       });
@@ -82,7 +81,10 @@ function gameboardFactory(name) {
       ship.position.forEach((coordinate) => {
         const x = coordinate[0].charCodeAt(0) - 64;
         const y = coordinate[1];
-        gridsArray[y - 1][x - 1] = [coordinate[0], y];
+        gridsArray[y - 1][x - 1] = {
+          coordinate: [coordinate[0], y],
+          ship,
+        };
       });
     }
 
@@ -147,11 +149,11 @@ function gameboardFactory(name) {
     return ship.position;
   }
 
-  const carrier = shipsFactory(5);
-  const battleship = shipsFactory(4);
-  const destroyer = shipsFactory(3);
-  const submarine = shipsFactory(3);
-  const patrolBoat = shipsFactory(2);
+  const carrier = shipsFactory('carrier', 5);
+  const battleship = shipsFactory('battleship', 4);
+  const destroyer = shipsFactory('destroyer', 3);
+  const submarine = shipsFactory('submarine', 3);
+  const patrolBoat = shipsFactory('patrolBoat', 2);
 
   const allShips = {
     carrier,
@@ -160,7 +162,7 @@ function gameboardFactory(name) {
     submarine,
     patrolBoat,
   };
-
+  //make use of gridsArray
   function receiveAttack(coordinate) {
     for (const ship in allShips) {
       const currentShip = allShips[ship];
