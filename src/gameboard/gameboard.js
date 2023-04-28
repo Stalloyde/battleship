@@ -147,26 +147,34 @@ function gameboardFactory(name) {
   function receiveAttack(coordinate) {
     let hitResults;
     let currentShip;
+    const filledCells = [];
 
     gridsArray.forEach((subArray) => {
       subArray.forEach((item) => {
         if (item[1].length > 1) {
-          if (item[0].join() === coordinate.join()) {
-            currentShip = item[1];
-            hitShots.push(coordinate);
-            hitResults = currentShip.hit();
-          }
+          filledCells.push(item);
         }
       });
     });
 
-    if (hitResults) {
+    filledCells.forEach((cell) => {
+      if (cell[0].join() === coordinate.join()) {
+        currentShip = cell[1];
+        hitResults = currentShip.hit();
+      }
+    });
+
+    if (hitResults === `isSunk:true`) {
       currentShip.isSunk = true;
-      return hitResults;
+      return currentShip;
     }
 
-    missedShots.push(coordinate);
-    return 'Missed!';
+    if (hitResults === 'Missed!') {
+      missedShots.push(coordinate);
+      return 'Missed!';
+    }
+
+    return hitResults;
   }
 
   return {
