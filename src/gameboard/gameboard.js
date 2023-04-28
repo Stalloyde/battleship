@@ -160,16 +160,17 @@ function gameboardFactory(name) {
     filledCells.forEach((cell) => {
       if (cell[0].join() === coordinate.join()) {
         currentShip = cell[1];
+        hitShots.push(coordinate);
         hitResults = currentShip.hit();
       }
     });
 
     if (hitResults === `isSunk:true`) {
       currentShip.isSunk = true;
-      return currentShip;
+      return currentShip.isSunk;
     }
 
-    if (hitResults === 'Missed!') {
+    if (!hitResults) {
       missedShots.push(coordinate);
       return 'Missed!';
     }
