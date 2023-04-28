@@ -146,12 +146,13 @@ function gameboardFactory(name) {
 
   function receiveAttack(coordinate) {
     let hitResults;
+    let currentShip;
 
     gridsArray.forEach((subArray) => {
       subArray.forEach((item) => {
         if (item[1].length > 1) {
           if (item[0].join() === coordinate.join()) {
-            const currentShip = item[1];
+            currentShip = item[1];
             hitShots.push(coordinate);
             hitResults = currentShip.hit();
           }
@@ -160,8 +161,10 @@ function gameboardFactory(name) {
     });
 
     if (hitResults) {
+      currentShip.isSunk = true;
       return hitResults;
     }
+
     missedShots.push(coordinate);
     return 'Missed!';
   }
