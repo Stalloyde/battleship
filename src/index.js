@@ -60,15 +60,21 @@ function appendGrid(containerToAppendOn, gameboardToCreateGridFrom) {
   const gridContainer = document.createElement('div');
 
   gameboardToCreateGridFrom === playerGameboard
-    ? gridContainer.classList.add('player-grid')
-    : gridContainer.classList.add('computer-grid');
+    ? gridContainer.classList.add('player-grid-container')
+    : gridContainer.classList.add('computer-grid-container');
 
   containerToAppendOn.appendChild(gridContainer);
 
   for (let y = 1; y < 11; y++) {
     for (let x = 1; x < 11; x++) {
       const grid = document.createElement('div');
-      grid.classList.add(`${gameboardToCreateGridFrom.gameboardOwner}`, 'grid');
+
+      if (gameboardToCreateGridFrom.gameboardOwner === 'Computer') {
+        grid.classList.add(`${gameboardToCreateGridFrom.gameboardOwner}-grid`);
+      } else {
+        grid.classList.add(`Player-grid`);
+      }
+
       grid.setAttribute('coordinate', generateCoordinates(x, y));
       gridContainer.appendChild(grid);
     }
@@ -114,7 +120,5 @@ appendShip(computerPatrolBoat.position, computerGameboard);
 
 //how to ensure 1 turn each?
 
-console.log(playerPatrolBoat);
-console.log(computer.attack(playerGameboard, ['E,2']));
-console.log(computer.attack(playerGameboard, ['F,2']));
-console.log(playerPatrolBoat);
+console.log(player.attack(computerGameboard, ['A', 9]));
+console.log(player.attack(computerGameboard, ['A', 10]));
