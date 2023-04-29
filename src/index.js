@@ -120,5 +120,24 @@ appendShip(computerPatrolBoat.position, computerGameboard);
 
 //how to ensure 1 turn each?
 
-console.log(player.attack(computerGameboard, ['A', 9]));
-console.log(player.attack(computerGameboard, ['A', 10]));
+function playerMove() {
+  window.addEventListener('click', (e) => {
+    if (e.target.classList.contains('Computer-grid')) {
+      const targetedCell = e.target.getAttribute('coordinate');
+      player.attack(computerGameboard, [targetedCell]);
+      e.target.innerHTML = 'O';
+    }
+    if (e.target.classList.contains('position-placed')) {
+      e.target.classList.add('hit');
+      e.target.innerHTML = 'X';
+    }
+  });
+}
+
+function computerMove() {
+  console.log(computer.attack(playerGameboard));
+  console.log(playerFactory().a);
+}
+
+playerMove();
+computerMove();
