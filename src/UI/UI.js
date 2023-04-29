@@ -9,9 +9,13 @@ export const computerGameboard = gameboardFactory(computer);
 
 export function appendShip(ship, gameboardToAppendShipTo) {
   const shipPosition = ship;
-  const gridNodes = document.querySelectorAll(
-    `.${gameboardToAppendShipTo.gameboardOwner}`
-  );
+  let gridNodes;
+
+  if (gameboardToAppendShipTo === computerGameboard) {
+    gridNodes = document.querySelectorAll(`.Computer-grid`);
+  } else {
+    gridNodes = document.querySelectorAll(`.Player-grid`);
+  }
 
   gridNodes.forEach((node) => {
     const coordinate = node.getAttribute('coordinate');
