@@ -110,16 +110,6 @@ appendShip(computerDestroyer.position, computerGameboard);
 appendShip(computerSubmarine.position, computerGameboard);
 appendShip(computerPatrolBoat.position, computerGameboard);
 
-//player attack computer gameboard
-//player.attack(computergameboard's coordinate)
-//computer gameboard.receiveAttack
-
-//computer attack player gameboard
-//computer.attack(playergameboard's coordinate)
-//player gameboard.receinpmveAttack
-
-//how to ensure 1 turn each?
-
 function playerMove() {
   window.addEventListener('click', (e) => {
     if (e.target.classList.contains('Computer-grid')) {
@@ -135,9 +125,27 @@ function playerMove() {
 }
 
 function computerMove() {
-  console.log(computer.attack(playerGameboard));
-  console.log(playerFactory().a);
+  const AimedCell = computer.attack(playerGameboard).coordinate;
+  const playerGrid = document.querySelectorAll('.Player-grid');
+
+  playerGrid.forEach((grid) => {
+    const targetedCell = grid.getAttribute('coordinate');
+    if (
+      targetedCell === AimedCell.join() &&
+      grid.classList.contains('position-placed')
+    ) {
+      grid.classList.add('hit');
+      grid.innerHTML = 'X';
+    }
+
+    if (
+      targetedCell === AimedCell.join() &&
+      !grid.classList.contains('position-placed')
+    )
+      grid.innerHTML = 'O';
+  });
 }
 
-playerMove();
+playerMove;
+computerMove();
 computerMove();
