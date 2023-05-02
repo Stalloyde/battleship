@@ -117,7 +117,10 @@ function playerMove() {
       player.attack(computerGameboard, [targetedCell]);
       e.target.innerHTML = 'O';
     }
-    if (e.target.classList.contains('position-placed')) {
+    if (
+      e.target.classList.contains('position-placed') &&
+      e.target.classList.contains('Computer-grid')
+    ) {
       e.target.classList.add('hit');
       e.target.innerHTML = 'X';
     }
@@ -146,6 +149,6 @@ function computerMove() {
   });
 }
 
-playerMove;
+playerMove();
 computerMove();
 computerMove();
