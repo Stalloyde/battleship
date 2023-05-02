@@ -18,10 +18,12 @@ function playerFactory(name = 'Computer') {
 
     for (let x = 0; x <= shotAttempts.length - 1; x++) {
       if (shotAttempts[x].join() === coordinate.join()) {
-        return 'Cannot attack same coordinates twice';
+        if (name !== 'Computer') return 'Cannot attack same coordinates twice';
+        if (name === ' Computer') return attack(opponentGameboard, coordinate);
       }
     }
-    return opponentGameboard.receiveAttack(coordinate);
+    const result = opponentGameboard.receiveAttack(coordinate);
+    return { result, coordinate };
   }
 
   return { name, attack, randomAttackCoordinate };
