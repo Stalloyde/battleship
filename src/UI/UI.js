@@ -7,8 +7,7 @@ export const computer = playerFactory();
 export const playerGameboard = gameboardFactory(player);
 export const computerGameboard = gameboardFactory(computer);
 
-export function appendShip(ship, gameboardToAppendShipTo) {
-  const shipPosition = ship;
+export function appendShip(shipPosition, gameboardToAppendShipTo) {
   let gridNodes;
 
   if (gameboardToAppendShipTo === computerGameboard) {
