@@ -20,8 +20,14 @@ computerGameboard.placeShip(submarine, 'vertical', ['D', 1]);
 computerGameboard.placeShip(patrolBoat, 'vertical', ['E', 1]);
 
 test('player attack', () => {
-  expect(player.attack(computerGameboard, ['A', 1])).toBe(`health:${4}`);
-  expect(player.attack(computerGameboard, ['A', 2])).toBe(`health:${3}`);
+  expect(player.attack(computerGameboard, ['A', 1])).toEqual({
+    coordinate: ['A', 1],
+    result: 'health:4',
+  });
+  expect(player.attack(computerGameboard, ['A', 2])).toEqual({
+    coordinate: ['A', 2],
+    result: 'health:3',
+  });
   expect(player.attack(computerGameboard, ['A', 1])).toBe(
     'Cannot attack same coordinates twice'
   );
@@ -42,7 +48,7 @@ test('computer attack with random coordinate', () => {
     `health:${1}`,
     'Cannot attack same coordinates twice',
     `isSunk:${true}`,
-  ]).toContain(computer.attack(playerGameboard));
+  ]).toContain(computer.attack(playerGameboard).result);
 
   expect([
     'Missed!',
@@ -52,7 +58,7 @@ test('computer attack with random coordinate', () => {
     `health:${1}`,
     'Cannot attack same coordinates twice',
     `isSunk:${true}`,
-  ]).toContain(computer.attack(playerGameboard));
+  ]).toContain(computer.attack(playerGameboard).result);
 
   expect([
     'Missed!',
@@ -62,7 +68,7 @@ test('computer attack with random coordinate', () => {
     `health:${1}`,
     'Cannot attack same coordinates twice',
     `isSunk:${true}`,
-  ]).toContain(computer.attack(playerGameboard));
+  ]).toContain(computer.attack(playerGameboard).result);
 
   expect([
     'Missed!',
@@ -72,7 +78,7 @@ test('computer attack with random coordinate', () => {
     `health:${1}`,
     'Cannot attack same coordinates twice',
     `isSunk:${true}`,
-  ]).toContain(computer.attack(playerGameboard));
+  ]).toContain(computer.attack(playerGameboard).result);
 
   expect([
     'Missed!',
@@ -82,5 +88,5 @@ test('computer attack with random coordinate', () => {
     `health:${1}`,
     'Cannot attack same coordinates twice',
     `isSunk:${true}`,
-  ]).toContain(computer.attack(playerGameboard));
+  ]).toContain(computer.attack(playerGameboard).result);
 });
