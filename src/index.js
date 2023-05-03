@@ -132,20 +132,6 @@ function handleAlignmentChange(alignmentElement, sampleGridElement) {
   }
 }
 
-function handleShipPlacingBtnClick(
-  targetShip,
-  targetShipAlignmentValue,
-  targetShipStartPosition
-) {
-  playerGameboard.placeShip(
-    targetShip,
-    targetShipAlignmentValue,
-    targetShipStartPosition
-  );
-
-  appendShip(targetShip.position, playerGameboard);
-}
-
 function playerMove() {
   window.addEventListener('click', (e) => {
     if (e.target.classList.contains('Computer-grid')) {
@@ -217,39 +203,79 @@ patrolBoatAlignment.addEventListener('change', () => {
   handleAlignmentChange(patrolBoatAlignment, patrolBoatSampleGrid);
 });
 
+const menuContainer = document.querySelector('.menu-container');
+const carrierMenu = document.querySelector('.carrier-menu');
+const submarineMenu = document.querySelector('.submarine-menu');
+const destroyerMenu = document.querySelector('.destroyer-menu');
+const battleshipMenu = document.querySelector('.battleship-menu');
+const patrolBoatMenu = document.querySelector('.patrol-boat-menu');
+
+function handleShipPlacingBtnClick(
+  targetShip,
+  targetShipAlignmentValue,
+  targetShipStartPosition,
+  targetDiv
+) {
+  playerGameboard.placeShip(
+    targetShip,
+    targetShipAlignmentValue,
+    targetShipStartPosition
+  );
+  appendShip(targetShip.position, playerGameboard);
+
+  if (targetShip.position.length !== 0) {
+    menuContainer.removeChild(targetDiv);
+  }
+
+  if (menuContainer.children.length === 0) {
+    const gameStartModal = document.querySelector('.game-start-modal');
+    computerGameboardContainer.removeChild(gameStartModal);
+  }
+}
+
 placeCarrierBtn.addEventListener('click', () => {
-  handleShipPlacingBtnClick(playerCarrier, carrierAlignment.value, [
-    carrierXAxis.value,
-    Number(carrierYAxis.value),
-  ]);
+  handleShipPlacingBtnClick(
+    playerCarrier,
+    carrierAlignment.value,
+    [carrierXAxis.value, Number(carrierYAxis.value)],
+    carrierMenu
+  );
 });
 
 placeBattleshipBtn.addEventListener('click', () => {
-  handleShipPlacingBtnClick(playerBattleship, battleshipAlignment.value, [
-    battleshipXAxis.value,
-    Number(battleshipYAxis.value),
-  ]);
+  handleShipPlacingBtnClick(
+    playerBattleship,
+    battleshipAlignment.value,
+    [battleshipXAxis.value, Number(battleshipYAxis.value)],
+    battleshipMenu
+  );
 });
 
 placeDestroyerBtn.addEventListener('click', () => {
-  handleShipPlacingBtnClick(playerDestroyer, destroyerAlignment.value, [
-    destroyerXAxis.value,
-    Number(destroyerYAxis.value),
-  ]);
+  handleShipPlacingBtnClick(
+    playerDestroyer,
+    destroyerAlignment.value,
+    [destroyerXAxis.value, Number(destroyerYAxis.value)],
+    destroyerMenu
+  );
 });
 
 placeSubmarineBtn.addEventListener('click', () => {
-  handleShipPlacingBtnClick(playerSubmarine, submarineAlignment.value, [
-    submarineXAxis.value,
-    Number(submarineYAxis.value),
-  ]);
+  handleShipPlacingBtnClick(
+    playerSubmarine,
+    submarineAlignment.value,
+    [submarineXAxis.value, Number(submarineYAxis.value)],
+    submarineMenu
+  );
 });
 
 placePatrolBoatBtn.addEventListener('click', () => {
-  handleShipPlacingBtnClick(playerPatrolBoat, patrolBoatAlignment.value, [
-    patrolBoatXAxis.value,
-    Number(patrolBoatYAxis.value),
-  ]);
+  handleShipPlacingBtnClick(
+    playerPatrolBoat,
+    patrolBoatAlignment.value,
+    [patrolBoatXAxis.value, Number(patrolBoatYAxis.value)],
+    patrolBoatMenu
+  );
 });
 
 computerGameboard.placeShip(computerCarrier);
