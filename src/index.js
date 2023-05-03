@@ -40,6 +40,12 @@ const patrolBoatYAxis = document.getElementById(
 );
 const patrolBoatSampleGrid = document.getElementById('patrol-boat-sample-grid');
 
+const placeCarrierBtn = document.querySelector('.place-carrier');
+const placeBattleshipBtn = document.querySelector('.place-battleship');
+const placeDestroyerBtn = document.querySelector('.place-destroyer');
+const placeSubmarineBtn = document.querySelector('.place-submarine');
+const placePatrolBoatBtn = document.querySelector('.place-patrol-boat');
+
 const playerGameboardContainer = document.querySelector(
   '.player-gameboard-container'
 );
@@ -110,11 +116,6 @@ function appendGrid(containerToAppendOn, gameboardToCreateGridFrom) {
   }
 }
 
-appendXAxisLabel();
-appendYAxisLabel();
-appendGrid(computerGameboardContainer, computerGameboard);
-appendGrid(playerGameboardContainer, playerGameboard);
-
 function createGrids(targetNode, numberOfGrids) {
   for (let x = 0; x < numberOfGrids; x++) {
     const grid = document.createElement('div');
@@ -130,6 +131,65 @@ function handleAlignmentChange(alignmentElement, sampleGridElement) {
     sampleGridElement.style.display = 'block';
   }
 }
+
+function handleShipPlacingBtnClick(
+  targetShip,
+  targetShipAlignmentValue,
+  targetShipStartPosition
+) {
+  playerGameboard.placeShip(
+    targetShip,
+    targetShipAlignmentValue,
+    targetShipStartPosition
+  );
+
+  appendShip(targetShip.position, playerGameboard);
+}
+
+function playerMove() {
+  window.addEventListener('click', (e) => {
+    if (e.target.classList.contains('Computer-grid')) {
+      const targetedCell = e.target.getAttribute('coordinate');
+      player.attack(computerGameboard, [targetedCell]);
+      e.target.innerHTML = 'O';
+    }
+
+    if (
+      e.target.classList.contains('position-placed') &&
+      e.target.classList.contains('Computer-grid')
+    ) {
+      e.target.classList.add('hit');
+      e.target.innerHTML = 'X';
+    }
+  });
+}
+
+function computerMove() {
+  const AimedCell = computer.attack(playerGameboard).coordinate;
+  const playerGrid = document.querySelectorAll('.Player-grid');
+
+  playerGrid.forEach((grid) => {
+    const targetedCell = grid.getAttribute('coordinate');
+    if (
+      targetedCell === AimedCell.join() &&
+      grid.classList.contains('position-placed')
+    ) {
+      grid.classList.add('hit');
+      grid.innerHTML = 'X';
+    }
+
+    if (
+      targetedCell === AimedCell.join() &&
+      !grid.classList.contains('position-placed')
+    )
+      grid.innerHTML = 'O';
+  });
+}
+
+appendXAxisLabel();
+appendYAxisLabel();
+appendGrid(computerGameboardContainer, computerGameboard);
+appendGrid(playerGameboardContainer, playerGameboard);
 
 createGrids(carrierSampleGrid, 5);
 createGrids(battleshipSampleGrid, 4);
@@ -156,26 +216,6 @@ submarineAlignment.addEventListener('change', () => {
 patrolBoatAlignment.addEventListener('change', () => {
   handleAlignmentChange(patrolBoatAlignment, patrolBoatSampleGrid);
 });
-
-function handleShipPlacingBtnClick(
-  targetShip,
-  targetShipAlignmentValue,
-  targetShipStartPosition
-) {
-  playerGameboard.placeShip(
-    targetShip,
-    targetShipAlignmentValue,
-    targetShipStartPosition
-  );
-
-  appendShip(targetShip.position, playerGameboard);
-}
-
-const placeCarrierBtn = document.querySelector('.place-carrier');
-const placeBattleshipBtn = document.querySelector('.place-battleship');
-const placeDestroyerBtn = document.querySelector('.place-destroyer');
-const placeSubmarineBtn = document.querySelector('.place-submarine');
-const placePatrolBoatBtn = document.querySelector('.place-patrol-boat');
 
 placeCarrierBtn.addEventListener('click', () => {
   handleShipPlacingBtnClick(playerCarrier, carrierAlignment.value, [
@@ -223,43 +263,3 @@ appendShip(computerBattleship.position, computerGameboard);
 appendShip(computerDestroyer.position, computerGameboard);
 appendShip(computerSubmarine.position, computerGameboard);
 appendShip(computerPatrolBoat.position, computerGameboard);
-
-function playerMove() {
-  window.addEventListener('click', (e) => {
-    if (e.target.classList.contains('Computer-grid')) {
-      const targetedCell = e.target.getAttribute('coordinate');
-      player.attack(computerGameboard, [targetedCell]);
-      e.target.innerHTML = 'O';
-    }
-
-    if (
-      e.target.classList.contains('position-placed') &&
-      e.target.classList.contains('Computer-grid')
-    ) {
-      e.target.classList.add('hit');
-      e.target.innerHTML = 'X';
-    }
-  });
-}
-
-function computerMove() {
-  const AimedCell = computer.attack(playerGameboard).coordinate;
-  const playerGrid = document.querySelectorAll('.Player-grid');
-
-  playerGrid.forEach((grid) => {
-    const targetedCell = grid.getAttribute('coordinate');
-    if (
-      targetedCell === AimedCell.join() &&
-      grid.classList.contains('position-placed')
-    ) {
-      grid.classList.add('hit');
-      grid.innerHTML = 'X';
-    }
-
-    if (
-      targetedCell === AimedCell.join() &&
-      !grid.classList.contains('position-placed')
-    )
-      grid.innerHTML = 'O';
-  });
-}
