@@ -11,6 +11,40 @@ import {
 } from './UI/UI';
 import './style.css';
 
+const carrierAlignment = document.getElementById('carrier-alignment');
+const carrierXAxis = document.getElementById('carrier-x-axis-coordinate');
+const carrierYAxis = document.getElementById('carrier-y-axis-coordinate');
+
+const battleshipAlignment = document.getElementById('battleship-alignment');
+const battleshipXAxis = document.getElementById('battleship-x-axis-coordinate');
+const battleshipYAxis = document.getElementById('battleship-y-axis-coordinate');
+
+const destroyerAlignment = document.getElementById('destroyer-alignment');
+const destroyerXAxis = document.getElementById('destroyer-x-axis-coordinate');
+const destroyerYAxis = document.getElementById('destroyer-y-axis-coordinate');
+
+const submarineAlignment = document.getElementById('submarine-alignment');
+const submarineXAxis = document.getElementById('submarine-x-axis-coordinate');
+const submarineYAxis = document.getElementById('submarine-y-axis-coordinate');
+
+const patrolBoatAlignment = document.getElementById('patrol-boat-alignment');
+const patrolBoatXAxis = document.getElementById(
+  'patrol-boat-x-axis-coordinate'
+);
+const patrolBoatYAxis = document.getElementById(
+  'patrol-boat-y-axis-coordinate'
+);
+
+const playerGameboardContainer = document.querySelector(
+  '.player-gameboard-container'
+);
+const computerGameboardContainer = document.querySelector(
+  '.computer-gameboard-container'
+);
+
+const xAxisLabel = document.querySelectorAll('.x-axis-label');
+const yAxisLabel = document.querySelectorAll('.y-axis-label');
+
 const playerCarrier = shipsFactory('carrier', 5);
 const playerBattleship = shipsFactory('battleship', 4);
 const playerDestroyer = shipsFactory('destroyer', 3);
@@ -22,16 +56,6 @@ const computerBattleship = shipsFactory('battleship', 4);
 const computerDestroyer = shipsFactory('destroyer', 3);
 const computerSubmarine = shipsFactory('submarine', 3);
 const computerPatrolBoat = shipsFactory('patrolBoat', 2);
-
-const playerGameboardContainer = document.querySelector(
-  '.player-gameboard-container'
-);
-const computerGameboardContainer = document.querySelector(
-  '.computer-gameboard-container'
-);
-
-const xAxisLabel = document.querySelectorAll('.x-axis-label');
-const yAxisLabel = document.querySelectorAll('.y-axis-label');
 
 function appendXAxisLabel() {
   xAxisLabel.forEach((item) => {
@@ -86,17 +110,54 @@ appendYAxisLabel();
 appendGrid(computerGameboardContainer, computerGameboard);
 appendGrid(playerGameboardContainer, playerGameboard);
 
-playerGameboard.placeShip(playerCarrier, 'vertical', ['A', 3]);
-playerGameboard.placeShip(playerBattleship, 'vertical', ['E', 5]);
-playerGameboard.placeShip(playerDestroyer, 'horizontal', ['C', 10]);
-playerGameboard.placeShip(playerSubmarine, 'vertical', ['H', 1]);
-playerGameboard.placeShip(playerPatrolBoat, 'horizontal', ['E', 2]);
+window.addEventListener('click', (e) => {
+  if (e.target.className === 'place-carrier') {
+    playerGameboard.placeShip(playerCarrier, carrierAlignment.value, [
+      carrierXAxis.value,
+      Number(carrierYAxis.value),
+    ]);
+    console.log(playerCarrier);
+    appendShip(playerCarrier.position, playerGameboard);
+  }
 
-appendShip(playerCarrier.position, playerGameboard);
-appendShip(playerBattleship.position, playerGameboard);
-appendShip(playerDestroyer.position, playerGameboard);
-appendShip(playerSubmarine.position, playerGameboard);
-appendShip(playerPatrolBoat.position, playerGameboard);
+  if (e.target.className === 'place-battleship') {
+    playerGameboard.placeShip(playerBattleship, battleshipAlignment.value, [
+      battleshipXAxis.value,
+      Number(battleshipYAxis.value),
+    ]);
+    console.log(playerBattleship);
+    appendShip(playerBattleship.position, playerGameboard);
+  }
+
+  if (e.target.className === 'place-destroyer') {
+    playerGameboard.placeShip(playerDestroyer, destroyerAlignment.value, [
+      destroyerXAxis.value,
+      Number(destroyerYAxis.value),
+    ]);
+    console.log(playerDestroyer);
+
+    appendShip(playerDestroyer.position, playerGameboard);
+  }
+
+  if (e.target.className === 'place-submarine') {
+    playerGameboard.placeShip(playerSubmarine, submarineAlignment.value, [
+      submarineXAxis.value,
+      Number(submarineYAxis.value),
+    ]);
+    console.log(playerSubmarine);
+    appendShip(playerSubmarine.position, playerGameboard);
+  }
+
+  if (e.target.className === 'place-patrol-boat') {
+    playerGameboard.placeShip(playerPatrolBoat, patrolBoatAlignment.value, [
+      patrolBoatXAxis.value,
+      Number(patrolBoatYAxis.value),
+    ]);
+    console.log(playerPatrolBoat);
+    appendShip(playerPatrolBoat.position, playerGameboard);
+  }
+  //why does placeShip() allow overlapping coordinates?
+});
 
 computerGameboard.placeShip(computerCarrier);
 computerGameboard.placeShip(computerBattleship);
@@ -148,7 +209,3 @@ function computerMove() {
       grid.innerHTML = 'O';
   });
 }
-
-playerMove();
-computerMove();
-computerMove();
