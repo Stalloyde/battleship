@@ -8,6 +8,7 @@ function playerFactory(name = 'Computer') {
       String.fromCharCode(Math.floor(Math.random() * (10 - 1) + 1) + 64),
       Math.floor(Math.random() * (11 - 1) + 1),
     ];
+
     return randomArray;
   }
 
@@ -15,11 +16,10 @@ function playerFactory(name = 'Computer') {
     const shotAttempts = opponentGameboard.hitShots.concat(
       opponentGameboard.missedShots
     );
-
     for (let x = 0; x <= shotAttempts.length - 1; x++) {
       if (shotAttempts[x].join() === coordinate.join()) {
         if (name !== 'Computer') return 'Cannot attack same coordinates twice';
-        if (name === ' Computer') return attack(opponentGameboard, coordinate);
+        if (name === 'Computer') return attack(opponentGameboard);
       }
     }
     const result = opponentGameboard.receiveAttack(coordinate);
