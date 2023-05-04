@@ -5,7 +5,7 @@ import shipsFactory from '../ships/ship';
 function playerFactory(name = 'Computer') {
   function randomAttackCoordinate() {
     const randomArray = [
-      String.fromCharCode(Math.floor(Math.random() * (10 - 1) + 1) + 64),
+      String.fromCharCode(Math.floor(Math.random() * 10 + 1) + 64),
       Math.floor(Math.random() * (11 - 1) + 1),
     ];
 
