@@ -132,24 +132,6 @@ function handleAlignmentChange(alignmentElement, sampleGridElement) {
   }
 }
 
-function playerMove() {
-  window.addEventListener('click', (e) => {
-    if (e.target.classList.contains('Computer-grid')) {
-      const targetedCell = e.target.getAttribute('coordinate');
-      player.attack(computerGameboard, [targetedCell]);
-      e.target.innerHTML = 'O';
-    }
-
-    if (
-      e.target.classList.contains('position-placed') &&
-      e.target.classList.contains('Computer-grid')
-    ) {
-      e.target.classList.add('hit');
-      e.target.innerHTML = 'X';
-    }
-  });
-}
-
 function computerMove() {
   const AimedCell = computer.attack(playerGameboard).coordinate;
   const playerGrid = document.querySelectorAll('.Player-grid');
@@ -169,6 +151,25 @@ function computerMove() {
       !grid.classList.contains('position-placed')
     )
       grid.innerHTML = 'O';
+  });
+}
+
+function playerMove() {
+  window.addEventListener('click', (e) => {
+    if (e.target.classList.contains('Computer-grid')) {
+      const targetedCell = e.target.getAttribute('coordinate');
+      player.attack(computerGameboard, [targetedCell]);
+      e.target.innerHTML = 'O';
+      computerMove(); //bug - computermove() calls even if player click on repeat coordinate
+    }
+
+    if (
+      e.target.classList.contains('position-placed') &&
+      e.target.classList.contains('Computer-grid')
+    ) {
+      e.target.classList.add('hit');
+      e.target.innerHTML = 'X';
+    }
   });
 }
 
@@ -289,3 +290,5 @@ appendShip(computerBattleship.position, computerGameboard);
 appendShip(computerDestroyer.position, computerGameboard);
 appendShip(computerSubmarine.position, computerGameboard);
 appendShip(computerPatrolBoat.position, computerGameboard);
+
+playerMove();
