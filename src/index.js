@@ -159,8 +159,10 @@ function playerMove() {
     if (e.target.classList.contains('Computer-grid')) {
       const targetedCell = e.target.getAttribute('coordinate');
       player.attack(computerGameboard, [targetedCell]);
-      e.target.innerHTML = 'O';
-      computerMove(); //bug - computermove() calls even if player click on repeat coordinate
+      if (e.target.innerHTML === '') {
+        computerMove();
+        e.target.innerHTML = 'O';
+      }
     }
 
     if (
