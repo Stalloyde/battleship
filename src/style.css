@@ -55,6 +55,7 @@ h4 {
 button {
   width: 100px;
   height: 40px;
+  border-radius: 10px;
 }
 
 select {
@@ -64,6 +65,7 @@ select {
 button:hover,
 select {
   cursor: pointer;
+  transform: scale(1.05);
 }
 
 body {
@@ -155,4 +157,37 @@ body {
 
 .hit {
   background-color: red;
+}
+
+.end-game-modal {
+  display: block;
+  position: absolute;
+  top: 40%;
+  left: 45%;
+  height: max-content;
+  width: max-content;
+  background-color: rgb(29, 29, 29);
+  padding: 1em;
+  border-radius: 20px;
+}
+
+.winner-announcement {
+  padding: 1.5em;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: azure;
+}
+
+.new-game-btn {
+  border-radius: 10px;
+  font-size: 1.5em;
+  padding: 1em;
+  height: max-content;
+  width: max-content;
+  font-weight: bold;
+}
+
+.new-game-btn:hover {
+  cursor: pointer;
+  transform: scale(1.05);
 }
