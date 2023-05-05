@@ -1,8 +1,6 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
-import shipsFactory from '../ships/ship';
-
 function gameboardFactory(name) {
   const gameboardOwner = name.name;
   const missedShots = [];
@@ -181,6 +179,25 @@ function gameboardFactory(name) {
     return hitResults;
   }
 
+  function areAllShipsSunk(
+    opponentGameboard,
+    carrierStatus,
+    battleshipStatus,
+    destroyerStatus,
+    submarineStatus,
+    patrolBoatStatus
+  ) {
+    if (
+      carrierStatus &&
+      battleshipStatus &&
+      destroyerStatus &&
+      submarineStatus &&
+      patrolBoatStatus
+    ) {
+      return true;
+    }
+  }
+
   return {
     gameboardOwner,
     gridsArray,
@@ -190,6 +207,7 @@ function gameboardFactory(name) {
     hitShots,
     missedShots,
     randomPositionCoordinate,
+    areAllShipsSunk,
   };
 }
 
