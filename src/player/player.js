@@ -1,7 +1,3 @@
-import { random } from 'lodash';
-import gameboardFactory from '../gameboard/gameboard';
-import shipsFactory from '../ships/ship';
-
 function playerFactory(name = 'Computer') {
   function randomAttackCoordinate() {
     const randomArray = [
