@@ -382,8 +382,18 @@ function game() {
     gridNodes.forEach((node) => {
       const coordinate = node.getAttribute('coordinate');
       shipPosition.forEach((position) => {
-        if (coordinate === position.join()) {
+        if (
+          coordinate === position.join() &&
+          gameboardToAppendShipTo.gameboardOwner !== 'Computer'
+        ) {
           node.classList.add('position-placed');
+        }
+
+        if (
+          coordinate === position.join() &&
+          gameboardToAppendShipTo.gameboardOwner === 'Computer'
+        ) {
+          node.classList.add('computer-position-placed');
         }
       });
     });
@@ -469,10 +479,7 @@ function game() {
           computerMove();
         }
 
-        if (
-          e.target.classList.contains('position-placed') &&
-          e.target.classList.contains('Computer-grid')
-        ) {
+        if (e.target.classList.contains('computer-position-placed')) {
           e.target.classList.add('hit');
           e.target.innerHTML = 'X';
         }
