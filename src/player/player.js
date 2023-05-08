@@ -12,6 +12,7 @@ function playerFactory(name = 'Computer') {
     const shotAttempts = opponentGameboard.hitShots.concat(
       opponentGameboard.missedShots
     );
+
     for (let x = 0; x <= shotAttempts.length - 1; x++) {
       if (shotAttempts[x].join() === coordinate.join()) {
         if (name !== 'Computer') return 'Cannot attack same coordinates twice';
