@@ -118,7 +118,7 @@ function gameboardFactory(name) {
 
     if (
       checkIfShipPlacementExceedsBoardSize() === true &&
-      gameboardOwner === 'Stalloyde'
+      gameboardOwner === 'You'
     ) {
       ship.position = [];
       return 'Error. Ship placement exceeds board size';
@@ -126,7 +126,7 @@ function gameboardFactory(name) {
 
     if (
       checkIfShipPlacementOverlapsAnother() === true &&
-      gameboardOwner === 'Stalloyde'
+      gameboardOwner === 'You'
     ) {
       ship.position = [];
       return 'Error. Ship position overlaps another';
