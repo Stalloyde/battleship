@@ -280,7 +280,7 @@ function clearPage() {
 }
 
 function game() {
-  const player = playerFactory('Stalloyde');
+  const player = playerFactory('You');
   const computer = playerFactory();
   const playerGameboard = gameboardFactory(player);
   const computerGameboard = gameboardFactory(computer);
