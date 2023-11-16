@@ -86,7 +86,8 @@ body {
 
 .game-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(375px, 1fr));
+  justify-content: center;
   align-items: center;
   padding: 1em;
   text-align: center;
@@ -116,22 +117,22 @@ body {
 .x-axis-label {
   display: grid;
   grid-column: 2/3;
-  grid-template-columns: repeat(10, 50px);
+  grid-template-columns: repeat(10, 3rem);
   align-items: center;
 }
 
 .y-axis-label {
   display: grid;
   grid-row: 2/3;
-  grid-template-rows: repeat(10, 50px);
+  grid-template-rows: repeat(10, 3rem);
   align-items: center;
 }
 
 .player-grid-container,
 .computer-grid-container {
   display: grid;
-  grid-template-columns: repeat(10, 50px);
-  grid-template-rows: repeat(10, 50px);
+  grid-template-columns: repeat(10, 3rem);
+  grid-template-rows: repeat(10, 3rem);
 }
 
 .Computer-grid,

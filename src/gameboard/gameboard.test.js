@@ -247,7 +247,7 @@ test('no overlapping ship placement', () => {
     ['E', 4],
   ]);
 
-  expect(playerGameboard.placeShip(shipD, 'vertical', ['E', 1])).toBe(
+  expect(playerGameboard.placeShip(shipD, 'horizontal', ['E', 2])).toBe(
     'Error. Ship position overlaps another'
   );
 
